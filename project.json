@@ -1,0 +1,12 @@
+{
+  "description": "Robotic Enterprise Framework Template",
+  "version": "2016.2.6274.33252",
+  "main": "Framework/Main.xaml",
+  "id": "ReFrameWork",
+  "dependencies": {},
+  "configurationOptions": {},
+  "excludedData": [
+    "Private:*",
+    "*password*"
+  ]
+}
