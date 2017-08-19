@@ -22,8 +22,8 @@
  + If failing, retry a few times as per Config("ProcessRetries")
 
 2. **GET TRANSACTION DATA**
- ./Framework/*GetTransactionData* - Fetches from Orchestrator queue as per Config("TransactionQueue")
- ./*GetTransactionData* - Sample for working with Excel input files
+   + ./Framework/*GetTransactionData* - Fetches from Orchestrator queue as per Config("TransactionQueue")
+   + ./*GetTransactionData* - Sample for working with Excel input files
 
 3. **PROCESS TRANSACTION**
  + Try *ProcessTransaction*
@@ -31,8 +31,8 @@
    + *SaveErrorScreen* - In Config("ErrorsFolder") with the exception message
    + Going to re/INITIALIZE
  + *SetTransactionStatus* - As Success, Failed or Rejected with reason
- ./Framework/*SetTransactionStatus* - Updates the Orchestrator queue item
- ./*SetTransactionStatus* - Sample for updating Excel input file
+   + ./Framework/*SetTransactionStatus* - Updates the Orchestrator queue item
+   + ./*SetTransactionStatus* - Sample for updating Excel input file
 
 4. **END PROCESS**
  + *CloseAllApplications* - As listed in Config("CloseApps")
