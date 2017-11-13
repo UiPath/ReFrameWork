@@ -1,6 +1,6 @@
 ### Documentation is included in the Documentation folder ###
 
-[ReFrameWork Documentation](ReFrameWork/Documentation/REFramework documentation.pdf)
+[ReFrameWork Documentation](https://github.com/UiPath/ReFrameWork/Documentation/REFramework documentation.pdf)
 
 ### ReFrameWork Template ###
 **Robotic Enterprise Framework**
