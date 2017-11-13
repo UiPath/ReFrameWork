@@ -1,3 +1,7 @@
+### Documentation is included in the Documentation folder ###
+
+[ReFrameWork Documentation](Documentation/REFramework documentation.pdf)
+
 ### ReFrameWork Template ###
 **Robotic Enterprise Framework**
 
