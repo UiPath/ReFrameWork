@@ -19,11 +19,11 @@
  + *InitiAllSettings* - Load config data from file and from assets
  + *InitiAllApplications* - Login to applications as per Config("OpenApps") field
    + *GetAppCredentials* - From Orchestrator assets or local Credential Manager
- + If failing, retry a few times as per Config("ProcessRetries")
+ + If initialization failing, retry a few times as per Config("ProcessRetries")
 
 2. **GET TRANSACTION DATA**
-   + ./Framework/*GetTransactionData* - Fetches from Orchestrator queue as per Config("TransactionQueue")
-   + ./*GetTransactionData* - Sample for working with Excel input files
+   + ./Framework/*GetTransactionData* - Fetch from Orchestrator queue as per Config("TransactionQueue")
+   + ./*GetTransactionData* - Fetch a row from sample Excel input file
 
 3. **PROCESS TRANSACTION**
  + Try *ProcessTransaction*
@@ -31,16 +31,22 @@
    + *SaveErrorScreen* - In Config("ErrorsFolder") with the exception message
    + Going to re/INITIALIZE
  + *SetTransactionStatus* - As Success, Failed or Rejected with reason
-   + ./Framework/*SetTransactionStatus* - Updates the Orchestrator queue item
-   + ./*SetTransactionStatus* - Sample for updating Excel input file
+   + ./Framework/*SetTransactionStatus* - Updates Orchestrator queue item
+   + ./*SetTransactionStatus* - Updates sample Excel file
 
 4. **END PROCESS**
  + *CloseAllApplications* - As listed in Config("CloseApps")
 
 
-### For New Project ###
+### Starting a Project ###
 
 1. Check out the Config.xlsx file and add/customize any required fields and values
-2. Implement OpenApp and CloseApp workflows, linking them in the Config.xlsx fields
+2. Implement OpenApp and CloseApp workflows in your App folder, linking them in the Config.xlsx fields
 3. Implement GetTransactionData and SetTransactionStatus or use ./Framework versions for Orchestrator queues
 4. Implement ProcessTransaction workflow and any invoked others
+
+
+### Extra Workflows ###
+
+* AddDataToQueue - From sample Excel file, with file name field and item index per file
+* SendStatusEmail - Using template file for the message body

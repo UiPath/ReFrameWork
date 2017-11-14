@@ -92,12 +92,12 @@
         <InArgument x:TypeArguments="x:String">[String.Format(emailMessage, Config("ProcessName"), If(ProcessError is Nothing, "completed successfully", "ended with error"), If(ProcessError is Nothing, ProcessDetail, ProcessError), Config("RobotName").ToString + Environment.NewLine + "@"+System.Net.Dns.GetHostName)]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:SendOutlookMail Account="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Body="[emailMessage]" DisplayName="Send Outlook Mail Message" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" IsBodyHtml="False" IsDraft="False" Subject="[Config(&quot;OutmailSubject&quot;).ToString]" To="[Config(&quot;OutmailTo&quot;).ToString]">
+    <ui:SendOutlookMail Account="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Body="[emailMessage]" DisplayName="Send Outlook Mail Message" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" IsBodyHtml="False" IsDraft="False" Subject="[Config(&quot;EmailSubject&quot;).ToString]" To="[Config(&quot;EmailTo&quot;).ToString]">
       <ui:SendOutlookMail.Files>
         <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4" />
       </ui:SendOutlookMail.Files>
     </ui:SendOutlookMail>
-    <sads:DebugSymbol.Symbol>dzhDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xYdHJhc1xTZW5kU3RhdHVzRW1haWwueGFtbBQBYQFrAQQBjwEBmQEBAwG+AQHUAQECSANlDgIBAUwFVQoCARJWBVa7AQIBDVcFXg4CAQlfBWMaAgECTBNMKAIBE04JUyECARVWWVaHAQIBEFYeVi4CAQ5cMFy+AgIBDFkxWT8CAQpfxQJf7wICAQdfel+KAQIBBV+SAl/BAgIBA1FLUWICARlQYlBqAgEXTsEBTuIBAgEW</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0pDOlxVc2Vyc1xNaWhhaVRhdHVcRG9jdW1lbnRzXFVpUGF0aFxSZUZyYW1lV29ya1xYdHJhc1xTZW5kU3RhdHVzRW1haWwueGFtbBQBYQFrAQQBjwEBmQEBAwG+AQHUAQECSANlDgIBAUwFVQoCARJWBVa7AQIBDVcFXg4CAQlfBWMaAgECTBNMKAIBE04JUyECARVWWVaHAQIBEFYeVi4CAQ5cMFy+AgIBDFkxWT8CAQpfwwJf6wICAQdfel+KAQIBBV+SAl+/AgIBA1FLUWICARlQYlBqAgEXTsEBTuIBAgEW</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
