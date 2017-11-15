@@ -1,4 +1,4 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="TakeScreenshot" this:TakeScreenshot.Folder="." this:TakeScreenshot.Message="[Nothing]"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="TraceSystemError" this:TraceSystemError.Config="[new Dictionary(Of String, Object) from {{&quot;ErrorsFolder&quot;, &quot;Errors&quot;}}]" this:TraceSystemError.Message="[Nothing]"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
@@ -11,7 +11,7 @@
  xmlns:ui="http://schemas.uipath.com/workflow/activities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="Folder" Type="InArgument(x:String)" />
+    <x:Property Name="Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property Name="Message" Type="InArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
@@ -63,12 +63,15 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>TimeSpan2</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Saves screenshot to png file with optional error message in a same name text file" DisplayName="Save Screenshot with Message" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Saves screenshot to png file with optional error message in a same name text file&#xA;&#xD;&#xA;Using Config(&quot;ErrorsFolder&quot;)" DisplayName="Trace System Error" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="ui:Image" Name="screenshot" />
       <Variable x:TypeArguments="x:String" Default="[Now.ToString(&quot;yyMMdd-hhmmss-fff&quot;)]" Name="fileName" />
+      <Variable x:TypeArguments="x:String" Default="[If(Config isNot Nothing AndAlso Config.Keys.Contains(&quot;ErrorsFolder&quot;) AndAlso Config(&quot;ErrorsFolder&quot;) isNot Nothing, Config(&quot;ErrorsFolder&quot;).ToString, &quot;.&quot;)]" Name="folder" />
     </Sequence.Variables>
     <ui:TakeScreenshot WaitBefore="{x:Null}" ContinueOnError="True" DisplayName="Take screenshot" sap2010:WorkflowViewState.IdRef="TakeScreenshot_1" Screenshot="[screenshot]">
       <ui:TakeScreenshot.Target>
@@ -77,7 +80,7 @@
     </ui:TakeScreenshot>
     <If Condition="[screenshot is Nothing]" DisplayName="If succeded taking screenshot" sap2010:WorkflowViewState.IdRef="If_2">
       <If.Else>
-        <ui:SaveImage ContinueOnError="True" DisplayName="Save screenshot" FileName="[Path.Combine(Folder, fileName+&quot;.png&quot;)]" sap2010:WorkflowViewState.IdRef="SaveImage_1" Image="[screenshot]" />
+        <ui:SaveImage ContinueOnError="True" DisplayName="Save screenshot" FileName="[Path.Combine(folder, fileName+&quot;.png&quot;)]" sap2010:WorkflowViewState.IdRef="SaveImage_1" Image="[screenshot]" />
       </If.Else>
     </If>
     <If Condition="[String.IsNullOrEmpty(Message)]" DisplayName="If saving an error message" sap2010:WorkflowViewState.IdRef="If_3">
@@ -85,7 +88,7 @@
         <ui:WriteTextFile DisplayName="Write text message" FileName="[Path.Combine(Folder, fileName+&quot;.log&quot;)]" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[Message]" />
       </If.Else>
     </If>
-    <sads:DebugSymbol.Symbol>d1JDOlxVc2Vyc1xNaWhhaVRhdHVcRG9jdW1lbnRzXFVpUGF0aFxSZUZyYW1lV29ya1wyLjBcRnJhbWV3b3JrXFNhdmVFcnJvclNjcmVlbi54YW1sEgF/AYkBAQMBXwFhAQJEA1kOAgEBRzRHYwIBAkkFTRkCARFOBVIKAgEKUwVXCgIBA0k+SUQCARRJoQFJrwECARJOE04sAgELUAlQzgECAQxTE1M0AgEEVQlVvgECAQZQJ1AtAgEQUFVQiAECAQ9QvQFQywECAQ1VsAFVuwECAQhVRVV4AgEH</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dz1DOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xGcmFtZXdvcmtcVHJhY2VTeXN0ZW1FcnJvci54YW1sEwHdAQHnAQEDAWMBvQEBAkYDXA4CAQFJNEljAgEDSjRK+AECAQJMBVAZAgESUQVVCgIBC1YFWgoCAQRMPkxEAgEVTKEBTK8BAgETURNRLAIBDFMJU84BAgENVhNWNAIBBVgJWL4BAgEHUydTLQIBEVNVU4gBAgEQU70BU8sBAgEOWLABWLsBAgEJWEVYeAIBCA==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -94,7 +97,7 @@
       <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="464,242" />
       <sap2010:ViewStateData Id="WriteTextFile_1" sap:VirtualizedContainerService.HintSize="314,87" />
       <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="464,237" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,779">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,811">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -102,7 +105,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TakeScreenshot_2" sap:VirtualizedContainerService.HintSize="526,899" />
+      <sap2010:ViewStateData Id="TakeScreenshot_2" sap:VirtualizedContainerService.HintSize="526,891" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
