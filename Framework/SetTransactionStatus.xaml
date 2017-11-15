@@ -71,51 +71,55 @@
   </TextExpression.ReferencesForImplementation>
   <Flowchart sap2010:Annotation.AnnotationText="Update progress status for transaction items in queue: Success, Business Exception, Application Error" DisplayName="SetTransactionStatus" sap2010:WorkflowViewState.IdRef="Flowchart_2">
     <Flowchart.StartNode>
-      <FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_8">
-        <If Condition="[String.IsNullOrEmpty(Detail)]" DisplayName="If rephrasing" sap2010:WorkflowViewState.IdRef="If_1">
-          <If.Else>
-            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke GetErrorDescription workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\GetErrorDescription.xaml">
-              <ui:InvokeWorkflowFile.Arguments>
-                <InOutArgument x:TypeArguments="x:String" x:Key="ErrorMessage">[Detail]</InOutArgument>
-              </ui:InvokeWorkflowFile.Arguments>
-            </ui:InvokeWorkflowFile>
-          </If.Else>
-        </If>
+      <FlowStep x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowStep_9">
+        <ui:LogMessage DisplayName="Log status message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Transaction status &quot; + Status + &quot;: &quot; + Detail]" />
         <FlowStep.Next>
-          <FlowDecision x:Name="__ReferenceID0" Condition="[Status.StartsWith(&quot;Complete&quot;)]" DisplayName="Success?" sap2010:WorkflowViewState.IdRef="FlowDecision_4">
-            <FlowDecision.True>
-              <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_5">
-                <ui:SetTransactionStatus Reason="{x:Null}" ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set complete status" ErrorType="Business" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_1" Status="Successful" TransactionItem="[TransactionItem]">
-                  <ui:SetTransactionStatus.Output>
-                    <scg:Dictionary x:TypeArguments="x:String, InArgument" />
-                  </ui:SetTransactionStatus.Output>
-                </ui:SetTransactionStatus>
-              </FlowStep>
-            </FlowDecision.True>
-            <FlowDecision.False>
-              <FlowDecision x:Name="__ReferenceID1" Condition="[Status.StartsWith(&quot;Error&quot;)]" DisplayName="Business?" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+          <FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_8">
+            <If Condition="[String.IsNullOrEmpty(Detail)]" DisplayName="If rephrasing" sap2010:WorkflowViewState.IdRef="If_1">
+              <If.Else>
+                <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke GetErrorDescription workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\GetErrorDescription.xaml">
+                  <ui:InvokeWorkflowFile.Arguments>
+                    <InOutArgument x:TypeArguments="x:String" x:Key="ErrorMessage">[Detail]</InOutArgument>
+                  </ui:InvokeWorkflowFile.Arguments>
+                </ui:InvokeWorkflowFile>
+              </If.Else>
+            </If>
+            <FlowStep.Next>
+              <FlowDecision x:Name="__ReferenceID0" Condition="[Status.StartsWith(&quot;Complete&quot;)]" DisplayName="Success?" sap2010:WorkflowViewState.IdRef="FlowDecision_4">
                 <FlowDecision.True>
-                  <FlowStep x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_6">
-                    <ui:SetTransactionStatus ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set exception status" ErrorType="Business" Reason="[Detail]" Status="Failed" TransactionItem="[TransactionItem]">
+                  <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_5">
+                    <ui:SetTransactionStatus Reason="{x:Null}" ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set complete status" ErrorType="Business" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_1" Status="Successful" TransactionItem="[TransactionItem]">
                       <ui:SetTransactionStatus.Output>
                         <scg:Dictionary x:TypeArguments="x:String, InArgument" />
                       </ui:SetTransactionStatus.Output>
-                      <sap2010:WorkflowViewState.IdRef>SetTransactionStatus_2</sap2010:WorkflowViewState.IdRef>
                     </ui:SetTransactionStatus>
                   </FlowStep>
                 </FlowDecision.True>
                 <FlowDecision.False>
-                  <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_7">
-                    <ui:SetTransactionStatus ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set error status" ErrorType="Application" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_3" Reason="[Detail]" Status="Failed" TransactionItem="[TransactionItem]">
-                      <ui:SetTransactionStatus.Output>
-                        <scg:Dictionary x:TypeArguments="x:String, InArgument" />
-                      </ui:SetTransactionStatus.Output>
-                    </ui:SetTransactionStatus>
-                  </FlowStep>
+                  <FlowDecision x:Name="__ReferenceID1" Condition="[Status.StartsWith(&quot;Error&quot;)]" DisplayName="Business?" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+                    <FlowDecision.True>
+                      <FlowStep x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_6">
+                        <ui:SetTransactionStatus ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set exception status" ErrorType="Business" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_2" Reason="[Detail]" Status="Failed" TransactionItem="[TransactionItem]">
+                          <ui:SetTransactionStatus.Output>
+                            <scg:Dictionary x:TypeArguments="x:String, InArgument" />
+                          </ui:SetTransactionStatus.Output>
+                        </ui:SetTransactionStatus>
+                      </FlowStep>
+                    </FlowDecision.True>
+                    <FlowDecision.False>
+                      <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_7">
+                        <ui:SetTransactionStatus ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set error status" ErrorType="Application" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_3" Reason="[Detail]" Status="Failed" TransactionItem="[TransactionItem]">
+                          <ui:SetTransactionStatus.Output>
+                            <scg:Dictionary x:TypeArguments="x:String, InArgument" />
+                          </ui:SetTransactionStatus.Output>
+                        </ui:SetTransactionStatus>
+                      </FlowStep>
+                    </FlowDecision.False>
+                  </FlowDecision>
                 </FlowDecision.False>
               </FlowDecision>
-            </FlowDecision.False>
-          </FlowDecision>
+            </FlowStep.Next>
+          </FlowStep>
         </FlowStep.Next>
       </FlowStep>
     </Flowchart.StartNode>
@@ -125,10 +129,12 @@
     <x:Reference>__ReferenceID3</x:Reference>
     <x:Reference>__ReferenceID4</x:Reference>
     <x:Reference>__ReferenceID5</x:Reference>
-    <sads:DebugSymbol.Symbol>d0FDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xGcmFtZXdvcmtcU2V0VHJhbnNhY3Rpb25TdGF0dXMueGFtbBBIA4EBDwIBAUsJUw4CARNVO1VmAgERYD9gZwIBD20VcS8CAQpjFWgvAgEFWBFcKwIBAksXSzcCARRNDVElAgEWbdgBbeIBAgENbYMCbZYCAgELY6ABY6oBAgEIY8sBY94BAgEGWIMCWJYCAgEDT1BPWAIBGE3IAU3sAQIBFw==</sads:DebugSymbol.Symbol>
+    <x:Reference>__ReferenceID6</x:Reference>
+    <sads:DebugSymbol.Symbol>d0FDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xGcmFtZXdvcmtcU2V0VHJhbnNhY3Rpb25TdGF0dXMueGFtbBJIA4YBDwIBAUsJS8YBAgEaTg1WEgIBE1g/WGoCARFjQ2NrAgEPbxlzMwIBCmYZajMCAQVbFV8vAgECS31LwwECARtOG047AgEUUBFUKQIBFm/cAW/mAQIBDW+HAm+aAgIBC2bdAWbnAQIBCGaIAmabAgIBBluHAluaAgIBA1JUUlwCARhQzAFQ8AECARc=</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="200,52" />
       <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="314,87" />
       <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="200,52">
         <sap:WorkflowViewStateService.ViewState>
@@ -148,7 +154,7 @@
       <sap2010:ViewStateData Id="FlowStep_5">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">0,449</av:Point>
+            <av:Point x:Key="ShapeLocation">0,499</av:Point>
             <av:Size x:Key="ShapeSize">200,22</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -157,7 +163,7 @@
       <sap2010:ViewStateData Id="FlowStep_6">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">200,449</av:Point>
+            <av:Point x:Key="ShapeLocation">200,499</av:Point>
             <av:Size x:Key="ShapeSize">200,22</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -172,7 +178,7 @@
       <sap2010:ViewStateData Id="FlowStep_7">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">400,449</av:Point>
+            <av:Point x:Key="ShapeLocation">400,499</av:Point>
             <av:Size x:Key="ShapeSize">200,22</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -181,10 +187,10 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">365,326.5</av:Point>
+            <av:Point x:Key="ShapeLocation">365,376.5</av:Point>
             <av:Size x:Key="ShapeSize">70,87</av:Size>
-            <av:PointCollection x:Key="TrueConnector">365,370 300,370 300,449</av:PointCollection>
-            <av:PointCollection x:Key="FalseConnector">435,370 500,370 500,449</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">365,420 300,420 300,499</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">435,420 500,420 500,499</av:PointCollection>
             <x:String x:Key="TrueLabel">Exception</x:String>
             <x:String x:Key="FalseLabel">Error</x:String>
           </scg:Dictionary>
@@ -194,10 +200,10 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">215,237.5</av:Point>
+            <av:Point x:Key="ShapeLocation">215,287.5</av:Point>
             <av:Size x:Key="ShapeSize">70,87</av:Size>
-            <av:PointCollection x:Key="TrueConnector">215,281 100,281 100,449</av:PointCollection>
-            <av:PointCollection x:Key="FalseConnector">285,281 400,281 400,326.5</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">215,331 100,331 100,499</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">285,331 400,331 400,376.5</av:PointCollection>
             <x:String x:Key="TrueLabel">Success</x:String>
             <x:String x:Key="FalseLabel">Failure</x:String>
           </scg:Dictionary>
@@ -206,9 +212,18 @@
       <sap2010:ViewStateData Id="FlowStep_8">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">150,157.5</av:Point>
+            <av:Point x:Key="ShapeLocation">150,197.5</av:Point>
             <av:Size x:Key="ShapeSize">200,52</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">250,209.5 250,237.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">250,249.5 250,287.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_9">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">150,107.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,52</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">250,159.5 250,197.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -217,9 +232,9 @@
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
-            <av:Point x:Key="ShapeLocation">220,42.5</av:Point>
+            <av:Point x:Key="ShapeLocation">220,0</av:Point>
             <av:Size x:Key="ShapeSize">60,75</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">250,117.5 250,157.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">250,75 250,107.5</av:PointCollection>
             <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>

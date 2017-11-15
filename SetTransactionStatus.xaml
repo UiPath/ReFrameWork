@@ -71,6 +71,7 @@
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="Save transaction progress status back to Excel file: Error, Retry, Fail, Complete" DisplayName="SetTransactionStatus" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <ui:LogMessage DisplayName="Log status message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Transaction status &quot; + Status + &quot;: &quot; + Detail]" />
     <If Condition="[String.IsNullOrEmpty(Detail)]" DisplayName="If any detail, Try rephrasing" sap2010:WorkflowViewState.IdRef="If_5">
       <If.Else>
         <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke GetErrorDescription workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\GetErrorDescription.xaml">
@@ -104,10 +105,11 @@
         </ActivityAction>
       </ui:ExcelApplicationScope.Body>
     </ui:ExcelApplicationScope>
-    <sads:DebugSymbol.Symbol>dzdDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xTZXRUcmFuc2FjdGlvblN0YXR1cy54YW1sGQH4AgGCAwEGAeIBAewBAQUBlAIB2QIBBAFjAcMBAQMBqgMBtAMBAkkDbA4CAQFKBVIKAgEUUwVqIAIBAkoTSjMCARVMCVAhAgEXU6ABU8oBAgESWQtnFgIBA05MTlQCARlMxAFM6AECARhdDWQWAgEOZQ1ltQECAQlmDWa2AQIBBGI/YncCARFfQF9HAgEPZSVlPAIBDWWoAWWyAQIBC2WaAWWiAQIBCmYlZjwCAQhmqQFmswECAQZmmwFmowECAQU=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzdDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xTZXRUcmFuc2FjdGlvblN0YXR1cy54YW1sGwH4AgGCAwEGAeIBAewBAQUBlAIB2QIBBAFjAcMBAQMBqgMBtAMBAkkDbQ4CAQFKBUrCAQIBG0sFUwoCARRUBWsgAgECSnlKvwECARxLE0szAgEVTQlRIQIBF1SgAVTKAQIBEloLaBYCAQNPTE9UAgEZTcQBTegBAgEYXg1lFgIBDmYNZrUBAgEJZw1ntgECAQRjP2N3AgERYEBgRwIBD2YlZjwCAQ1mqAFmsgECAQtmmgFmogECAQpnJWc8AgEIZ6kBZ7MBAgEGZ5sBZ6MBAgEF</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="464,93" />
       <sap2010:ViewStateData Id="InvokeWorkflowFile_2" sap:VirtualizedContainerService.HintSize="314,87" />
       <sap2010:ViewStateData Id="If_5" sap:VirtualizedContainerService.HintSize="464,237">
         <sap:WorkflowViewStateService.ViewState>
@@ -128,7 +130,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="464,547" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,976">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,1109">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -136,7 +138,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SetRequestStatus_1" sap:VirtualizedContainerService.HintSize="526,1056" />
+      <sap2010:ViewStateData Id="SetRequestStatus_1" sap:VirtualizedContainerService.HintSize="526,1189" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
