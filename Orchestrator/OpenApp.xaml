@@ -71,7 +71,7 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Open application and login with available user credentials" DisplayName="OpenApp" sap2010:WorkflowViewState.IdRef="Sequence_2">
+  <Sequence sap2010:Annotation.AnnotationText="Open application and login with available user credentials&#xD;&#xA;&#xD;&#xA;Using Config(&quot;OrchestratorUrl&quot;, &quot;OrchestratorTenant&quot;, &quot;OrchestratorCredential&quot;)" DisplayName="OpenApp" sap2010:WorkflowViewState.IdRef="Sequence_2">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="username" />
       <Variable x:TypeArguments="ss:SecureString" Name="password" />
@@ -136,7 +136,7 @@
         </ActivityAction>
       </ui:OpenBrowser.Body>
     </ui:OpenBrowser>
-    <sads:DebugSymbol.Symbol>d0lDOlxVc2Vyc1xNaWhhaVRhdHVcRG9jdW1lbnRzXFVpUGF0aFxSZUZyYW1lV29ya1xPcmNoZXN0cmF0b3JcT3BlbkFwcC54YW1sGwFRAcACAQJKA4wBDgIBAU40TmsCAQJQBVQdAgEgVQVbHQIBGFwFigEWAgEEUCxQMgIBIlCxAVDNAQIBIVhDWE8CAR5XQldMAgEcWUlZUwIBGlW+AVXgAQIBGVzLAVz7AQIBFmILhwEWAgEFYw1jhQECARVkDWgbAgEUaQ1tGwIBEG4NchsCAQxzDXchAgEIeA2GARgCAQZrZ2uXAQIBE2mrAmneAgIBEXBncJ0BAgEPbrECbr0CAgENdWd1mQECAQtzlwJzowICAQmEAWeEAZgBAgEH</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzdDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xPcmNoZXN0cmF0b3JcT3BlbkFwcC54YW1sGwFRAcACAQJKA4wBDgIBAU40TmsCAQJQBVQdAgEgVQVbHQIBGFwFigEWAgEEUCxQMgIBIlCxAVDNAQIBIVhDWE8CAR5XQldMAgEcWUlZUwIBGlW+AVXgAQIBGVzLAVz7AQIBFmILhwEWAgEFYw1jhQECARVkDWgbAgEUaQ1tGwIBEG4NchsCAQxzDXchAgEIeA2GARgCAQZrZ2uXAQIBE2mrAmneAgIBEXBncJ0BAgEPbrECbr0CAgENdWd1mQECAQtzlwJzowICAQmEAWeEAZgBAgEH</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -156,7 +156,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="OpenBrowser_1" sap:VirtualizedContainerService.HintSize="414,841" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="436,1247">
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="436,1295">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -164,7 +164,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="OpenRLS_1" sap:VirtualizedContainerService.HintSize="476,1367" />
+      <sap2010:ViewStateData Id="OpenRLS_1" sap:VirtualizedContainerService.HintSize="476,1375" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

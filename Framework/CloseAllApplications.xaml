@@ -65,7 +65,7 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Close applications used in the process" DisplayName="Close All Apps" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Close applications used in the process&#xD;&#xA;&#xD;&#xA;Using Config(&quot;CloseApps&quot;)" DisplayName="Close All Apps" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <ui:ForEach x:TypeArguments="x:String" DisplayName="For each closing app workflow" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Config(&quot;CloseApps&quot;).ToString.Split({&quot;,&quot;, &quot; &quot;}, StringSplitOptions.RemoveEmptyEntries)]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:String">
@@ -80,13 +80,13 @@
         </ActivityAction>
       </ui:ForEach.Body>
     </ui:ForEach>
-    <sads:DebugSymbol.Symbol>d1dDOlxVc2Vyc1xNaWhhaVRhdHVcRG9jdW1lbnRzXFVpUGF0aFxSZUZyYW1lV29ya1wyLjBcRnJhbWV3b3JrXENsb3NlQWxsQXBwbGljYXRpb25zLnhhbWwGAVsBvAEBAkQDVA4CAQFFBVISAgECRY0BRYQCAgEGSwtPIwIBA0u8AUvQAQIBBA==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0FDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xGcmFtZXdvcmtcQ2xvc2VBbGxBcHBsaWNhdGlvbnMueGFtbAYBWwG8AQECRANUDgIBAUUFUhICAQJFjQFFhAICAQZLC08jAgEDS7wBS9ABAgEE</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="InvokeWorkflowFile_3" sap:VirtualizedContainerService.HintSize="314,87" />
       <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="330,222" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="352,374">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="352,406">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -94,7 +94,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="CloseAllApps_1" sap:VirtualizedContainerService.HintSize="392,614" />
+      <sap2010:ViewStateData Id="CloseAllApps_1" sap:VirtualizedContainerService.HintSize="392,486" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
