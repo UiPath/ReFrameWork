@@ -73,12 +73,12 @@
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="wfiCase" />
     </Sequence.Variables>
-    <If Condition="[new Random().Next(1,100) &gt; 80]" DisplayName="If random, Throw business exception" sap2010:WorkflowViewState.IdRef="If_9">
+    <If Condition="[new Random().Next(1,100) &gt; 70]" DisplayName="If random, Throw business exception" sap2010:WorkflowViewState.IdRef="If_9">
       <If.Then>
-        <Throw DisplayName="Throw business exception" Exception="[new BusinessRuleException(&quot;Random business exception&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_3" />
+        <Throw DisplayName="Throw business exception" Exception="[new BusinessRuleException(&quot;Strict business exception&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_3" />
       </If.Then>
     </If>
-    <If Condition="[new Random().Next(1,100) &gt; 70]" DisplayName="If random, Throw application exception" sap2010:WorkflowViewState.IdRef="If_10">
+    <If Condition="[new Random().Next(1,100) &gt; 50]" DisplayName="If random, Throw application exception" sap2010:WorkflowViewState.IdRef="If_10">
       <If.Then>
         <Throw DisplayName="Throw application exception" Exception="[new Exception(&quot;Random application exception&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_4" />
       </If.Then>
@@ -130,7 +130,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Transaction_1" sap:VirtualizedContainerService.HintSize="526,1248" />
+      <sap2010:ViewStateData Id="Transaction_1" sap:VirtualizedContainerService.HintSize="526,1208" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
