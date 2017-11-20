@@ -1,4 +1,4 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="AddDataToQueue" mva:VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="AddDataToQueue_1"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="OnloadQueue" mva:VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="AddDataToQueue_1"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
@@ -60,7 +60,7 @@
       <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="AddDataToQueue" sap2010:WorkflowViewState.IdRef="Sequence_3">
+  <Sequence DisplayName="OnloadQueue" sap2010:WorkflowViewState.IdRef="Sequence_3">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" Name="config" />
     </Sequence.Variables>
@@ -117,11 +117,17 @@
         </ActivityAction>
       </ui:ForEach.Body>
     </ui:ForEach>
-    <sads:DebugSymbol.Symbol>dzdDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xYdHJhc1xBZGREYXRhVG9RdWV1ZS54YW1sFj8DeQ4CAQFDBUgdAgEXSQV3EgIBAkZHRl4CARtFXkVmAgEZQ70BQ94BAgEYSYQBSdgBAgEWTwt0JgIBA0+mAU+yAQIBFFURcRwCAQRZE18nAgEPYBNwIwIBBVkwWToCARJcGVxIAgERWZcBWZ8BAgEQYCxgNgIBDWYZbSsCAQZqUWpuAgEMaVBpZQIBC2bHAWb4AQIBCWtSa5sBAgEIaFFoZwIBBw==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzRDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xYdHJhc1xPbmxvYWRRdWV1ZS54YW1sFj8DeQ4CAQFDBUgdAgEXSQV3EgIBAkZHRl4CARtFXkVmAgEZQ70BQ94BAgEYSYQBSdgBAgEWTwt0JgIBA0+mAU+yAQIBFFURcRwCAQRZE18nAgEPYBNwIwIBBVkwWToCARJcGVxIAgERWZcBWZ8BAgEQYCxgNgIBDWYZbSsCAQZqUWpuAgEMaVBpZQIBC2bHAWb4AQIBCWtSa5sBAgEIaFFoZwIBBw==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="430,87" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="430,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="ExcelReadRange_1" sap:VirtualizedContainerService.HintSize="314,59" />
       <sap2010:ViewStateData Id="AddQueueItem_1" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="ForEachRow_1" sap:VirtualizedContainerService.HintSize="314,208" />
@@ -132,16 +138,35 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="414,540" />
-      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="430,675" />
-      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="452,926">
+      <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="414,580">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="430,715">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="452,966">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="AddDataToQueue_1" sap:VirtualizedContainerService.HintSize="492,1046" />
+      <sap2010:ViewStateData Id="AddDataToQueue_1" sap:VirtualizedContainerService.HintSize="492,1246">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="ShouldCollapseAll">False</x:Boolean>
+            <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

@@ -106,56 +106,42 @@
         </Assign.Value>
       </Assign>
     </Sequence>
-    <TryCatch DisplayName="Try Loading Config File" sap2010:WorkflowViewState.IdRef="TryCatch_1">
-      <TryCatch.Try>
-        <ui:ForEach x:TypeArguments="x:String" DisplayName="For each sheet &lt;string&gt;" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[configSheets]">
-          <ui:ForEach.Body>
-            <ActivityAction x:TypeArguments="x:String">
-              <ActivityAction.Argument>
-                <DelegateInArgument x:TypeArguments="x:String" Name="sheet" />
-              </ActivityAction.Argument>
-              <Sequence DisplayName="Get Local Settings" sap2010:WorkflowViewState.IdRef="Sequence_5">
-                <Sequence.Variables>
-                  <Variable x:TypeArguments="sd:DataTable" Name="configTable" />
-                </Sequence.Variables>
-                <ui:ReadRange Range="{x:Null}" DataTable="[configTable]" DisplayName="Read range settings" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="[sheet]" WorkbookPath="[configFile]" />
-                <ui:ForEachRow DataTable="[configTable]" DisplayName="For each row" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
-                  <ui:ForEachRow.Body>
-                    <ActivityAction x:TypeArguments="sd:DataRow">
-                      <ActivityAction.Argument>
-                        <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
-                      </ActivityAction.Argument>
-                      <If Condition="[String.IsNullOrEmpty(row(&quot;Name&quot;).ToString.Trim)]" sap2010:WorkflowViewState.IdRef="If_1">
-                        <If.Else>
-                          <Assign DisplayName="Add key/value pair" sap2010:WorkflowViewState.IdRef="Assign_15">
-                            <Assign.To>
-                              <OutArgument x:TypeArguments="x:Object">[settings(row("Name").ToString.Trim)]</OutArgument>
-                            </Assign.To>
-                            <Assign.Value>
-                              <InArgument x:TypeArguments="x:Object">[row("Value")]</InArgument>
-                            </Assign.Value>
-                          </Assign>
-                        </If.Else>
-                      </If>
-                    </ActivityAction>
-                  </ui:ForEachRow.Body>
-                </ui:ForEachRow>
-              </Sequence>
-            </ActivityAction>
-          </ui:ForEach.Body>
-        </ui:ForEach>
-      </TryCatch.Try>
-      <TryCatch.Catches>
-        <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
-          <ActivityAction x:TypeArguments="s:Exception">
-            <ActivityAction.Argument>
-              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
-            </ActivityAction.Argument>
-            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Warn" Message="[&quot;Could not load config file: &quot; + exception.Message]" />
-          </ActivityAction>
-        </Catch>
-      </TryCatch.Catches>
-    </TryCatch>
+    <ui:ForEach x:TypeArguments="x:String" DisplayName="For each Config sheet &lt;string&gt;" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[configSheets]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:String">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:String" Name="sheet" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Get Settings" sap2010:WorkflowViewState.IdRef="Sequence_5">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="sd:DataTable" Name="configTable" />
+            </Sequence.Variables>
+            <ui:ReadRange Range="{x:Null}" DataTable="[configTable]" DisplayName="Read range settings" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="[sheet]" WorkbookPath="[configFile]" />
+            <ui:ForEachRow DataTable="[configTable]" DisplayName="For each row" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+              <ui:ForEachRow.Body>
+                <ActivityAction x:TypeArguments="sd:DataRow">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                  </ActivityAction.Argument>
+                  <If Condition="[String.IsNullOrEmpty(row(&quot;Name&quot;).ToString.Trim)]" sap2010:WorkflowViewState.IdRef="If_1">
+                    <If.Else>
+                      <Assign DisplayName="Add key/value pair" sap2010:WorkflowViewState.IdRef="Assign_15">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Object">[settings(row("Name").ToString.Trim)]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Object">[row("Value")]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                    </If.Else>
+                  </If>
+                </ActivityAction>
+              </ui:ForEachRow.Body>
+            </ui:ForEachRow>
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
     <TryCatch DisplayName="Try Loading Server Assets" sap2010:WorkflowViewState.IdRef="TryCatch_2">
       <TryCatch.Try>
         <Sequence DisplayName="Loading Assets" sap2010:WorkflowViewState.IdRef="Sequence_6">
@@ -221,7 +207,7 @@
         </Catch>
       </TryCatch.Catches>
     </TryCatch>
-    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xNaWhhaVRhdHVcRG9jdW1lbnRzXFVpUGF0aFxSZUZyYW1lV29ya1xGcmFtZXdvcmtcSW5pdGlBbGxTZXR0aW5ncy54YW1sOQGYAQGxAQEDAWcBcwECTAPhAQ4CAQFNBU2eAQIBRU4FVQ4CAUFWBWwQAgEzbQWeARACARyfAQXfARACAQJNe02bAQIBRlNKU20CAURQS1BVAgFCWwdbmwECAT1cB2MQAgE4ZAdrEAIBNG8JkgEWAgEgmgENmgG9AQIBHaEBCdMBFAIBBdsBDdsBoQECAQNbWVtnAgFAWyBbLwIBPmEyYXICATteM14/AgE5aTJpngECATdmM2ZMAgE1b5EBb6EBAgExdQ+PARoCASGaAXqaAboBAgEepQELpQG+AQIBFqYBC9IBGwIBBtsBe9sBngECAQR5EXnMAQIBKnoRjgEhAgEipQE0pQE+AgEapQGXAaUBnwECARmlAa0BpQG7AQIBF6YBJKYBLgIBFKwBEc8BHAIBB3k6eUkCAS95pAF5rQECAS15uwF5yQECASt6Kno5AgEogAEXiwEcAgEjrgEVvwEgAgEMxwEZywEeAgEIgAElgAFiAgEkggEbiQEkAgElsgEXtgEqAgEQtwEXvgEgAgENxwEnxwFkAgEJyQEdyQH5AQIBCocBRocBVAIBJ4QBR4QBbAIBJrQBSrQBVgIBErIBSLIBawIBEbwBQrwBTgIBD7kBQ7kBYwIBDskBigHJAfYBAgEL</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dz1DOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xGcmFtZXdvcmtcSW5pdGlBbGxTZXR0aW5ncy54YW1sNgGYAQGxAQEDAWcBcwECTAPTAQ4CAQFNBU2eAQIBQU4FVQ4CAT1WBWwQAgEvbQWQARICARyRAQXRARACAQJNe02bAQIBQlNKU20CAUBQS1BVAgE+WwdbmwECATlcB2MQAgE0ZAdrEAIBMG2UAW2kAQIBLXMLjQEWAgEdkwEJxQEUAgEFzQENzQGhAQIBA1tZW2cCATxbIFsvAgE6YTJhcgIBN14zXj8CATVpMmmeAQIBM2YzZkwCATF3DXfIAQIBJngNjAEdAgEelwELlwG+AQIBFpgBC8QBGwIBBs0Be80BngECAQR3NndFAgErd6ABd6kBAgEpd7cBd8UBAgEneCZ4NQIBJH4TiQEYAgEflwE0lwE+AgEalwGXAZcBnwECARmXAa0BlwG7AQIBF5gBJJgBLgIBFJ4BEcEBHAIBB34hfl4CASCAAReHASACASGgARWxASACAQy5ARm9AR4CAQiFAUKFAVACASOCAUOCAWgCASKkAReoASoCARCpARewASACAQ25ASe5AWQCAQm7AR27AfkBAgEKpgFKpgFWAgESpAFIpAFrAgERrgFCrgFOAgEPqwFDqwFjAgEOuwGKAbsB9gECAQs=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -242,7 +228,14 @@
       <sap2010:ViewStateData Id="ReadRange_2" sap:VirtualizedContainerService.HintSize="494,87" />
       <sap2010:ViewStateData Id="Assign_15" sap:VirtualizedContainerService.HintSize="242,60" />
       <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,210" />
-      <sap2010:ViewStateData Id="ForEachRow_2" sap:VirtualizedContainerService.HintSize="494,359" />
+      <sap2010:ViewStateData Id="ForEachRow_2" sap:VirtualizedContainerService.HintSize="494,359">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="516,610">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -251,24 +244,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEach`1_3" sap:VirtualizedContainerService.HintSize="200,52">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="LogMessage_2" sap:VirtualizedContainerService.HintSize="314,93" />
-      <sap2010:ViewStateData Id="Catch`1_1" sap:VirtualizedContainerService.HintSize="404,22">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="336,52">
+      <sap2010:ViewStateData Id="ForEach`1_3" sap:VirtualizedContainerService.HintSize="336,52">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>

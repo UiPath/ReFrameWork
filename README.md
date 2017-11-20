@@ -28,11 +28,11 @@
 3. **PROCESS TRANSACTION**
  + Try *ProcessTransaction*
  + If application exceptions happen
-   + *SaveErrorScreen* - In Config("ErrorsFolder") with the exception message
+   + *TraceSystemError* - Saves screenshot and error message In Config("ErrorsFolder")
    + Going to re/INITIALIZE
  + *SetTransactionStatus* - As Success, Failed or Rejected with reason
    + ./Framework/*SetTransactionStatus* - Updates Orchestrator queue item
-   + ./*SetTransactionStatus* - Updates sample Excel file
+   + ./*SetTransactionStatus* - Updates sample Excel row
 
 4. **END PROCESS**
  + *CloseAllApplications* - As listed in Config("CloseApps")
@@ -48,5 +48,11 @@
 
 ### Extra Workflows ###
 
-* AddDataToQueue - From sample Excel file, with file name field and item index per file
-* SendStatusEmail - Using template file for the message body
+Many enterprise processes nowadays start and end with an Excel file attached to an email
+In a robotic world, such scenarios have three phases:
+1. Filter email, save Excel attachments and load all data into an Orchestrator transaction queue
+* Check out the *Xtras/OnloadQueue* sample that loads data from Excel in a queue tracking the file it belongs to and the row index
+2. Process the items in the transaction queue with multiple robots using *ReFrameWork template* passing items and statuses to a secondary queue
+3. Reassemble the Excel files with statuses from the secondary queue and send them via email
+* Check out the *Xtras/OffloadQueue* sample that saves items from a queue to Excel files
+* Check out the *Xtras/SendStatusEmail* that uses a template file for the message body

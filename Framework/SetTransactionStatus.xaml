@@ -3,6 +3,7 @@
  xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
@@ -16,6 +17,7 @@
     <x:Property Name="Status" Type="InArgument(x:String)" />
     <x:Property Name="Detail" Type="InArgument(x:String)" />
     <x:Property Name="TransactionItem" Type="InArgument(ui:QueueItem)" />
+    <x:Property Name="Exception" Type="InArgument(s:Exception)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
@@ -108,7 +110,7 @@
                     </FlowDecision.True>
                     <FlowDecision.False>
                       <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_7">
-                        <ui:SetTransactionStatus ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set error status" ErrorType="Application" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_3" Reason="[Detail]" Status="Failed" TransactionItem="[TransactionItem]">
+                        <ui:SetTransactionStatus ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" Details="[If(Exception isNot Nothing, Exception.StackTrace, String.Empty)]" DisplayName="Set error status" ErrorType="Application" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_3" Reason="[Detail]" Status="Failed" TransactionItem="[TransactionItem]">
                           <ui:SetTransactionStatus.Output>
                             <scg:Dictionary x:TypeArguments="x:String, InArgument" />
                           </ui:SetTransactionStatus.Output>
@@ -130,7 +132,7 @@
     <x:Reference>__ReferenceID4</x:Reference>
     <x:Reference>__ReferenceID5</x:Reference>
     <x:Reference>__ReferenceID6</x:Reference>
-    <sads:DebugSymbol.Symbol>d0FDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xGcmFtZXdvcmtcU2V0VHJhbnNhY3Rpb25TdGF0dXMueGFtbBJIA4YBDwIBAUsJS8YBAgEaTg1WEgIBE1g/WGoCARFjQ2NrAgEPbxlzMwIBCmYZajMCAQVbFV8vAgECS31LwwECARtOG047AgEUUBFUKQIBFm/cAW/mAQIBDW+HAm+aAgIBC2bdAWbnAQIBCGaIAmabAgIBBluHAluaAgIBA1JUUlwCARhQzAFQ8AECARc=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0FDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xGcmFtZXdvcmtcU2V0VHJhbnNhY3Rpb25TdGF0dXMueGFtbBNKA4gBDwIBAU0JTcYBAgEdUA1YEgIBFlo/WmoCARRlQ2VrAgEScRl1MwIBCmgZbDMCAQVdFWEvAgECTX1NwwECAR5QG1A7AgEXUhFWKQIBGXGoAnGyAgIBEHFtcbABAgENcdMCceYCAgELaN0BaOcBAgEIaIgCaJsCAgEGXYcCXZoCAgEDVFRUXAIBG1LMAVLwAQIBGg==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
