@@ -1,4 +1,4 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="SendStatusEmail" this:SendStatusEmail.Config="[Nothing]" this:SendStatusEmail.ProcessError="[Nothing]" this:SendStatusEmail.ProcessDetail="Have a wonderful day!"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="SendStatusEmail" this:SendStatusEmail.Config="[Nothing]" this:SendStatusEmail.ProcessError="[Nothing]" this:SendStatusEmail.ProcessDetail="Have a wonderful day"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
@@ -78,7 +78,7 @@
         <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke InitiAllSettings workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\InitiAllSettings.xaml">
           <ui:InvokeWorkflowFile.Arguments>
             <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="Settings">[Config]</InOutArgument>
-            <InArgument x:TypeArguments="s:String[]" x:Key="ConfigSheets">[{"Settings", "Xtras"}]</InArgument>
+            <InArgument x:TypeArguments="s:String[]" x:Key="ConfigSheets">[{"Dispatch"}]</InArgument>
           </ui:InvokeWorkflowFile.Arguments>
         </ui:InvokeWorkflowFile>
       </If.Then>
@@ -97,7 +97,7 @@
         <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4" />
       </ui:SendOutlookMail.Files>
     </ui:SendOutlookMail>
-    <sads:DebugSymbol.Symbol>d0pDOlxVc2Vyc1xNaWhhaVRhdHVcRG9jdW1lbnRzXFVpUGF0aFxSZUZyYW1lV29ya1xYdHJhc1xTZW5kU3RhdHVzRW1haWwueGFtbBQBYQFrAQQBjwEBmQEBAwG+AQHUAQECSANlDgIBAUwFVQoCARJWBVa7AQIBDVcFXg4CAQlfBWMaAgECTBNMKAIBE04JUyECARVWWVaHAQIBEFYeVi4CAQ5cMFy+AgIBDFkxWT8CAQpfwwJf6wICAQdfel+KAQIBBV+SAl+/AgIBA1FLUWICARlQYlBqAgEXTsEBTuIBAgEW</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dz1DOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xEaXNwYXRjaGVyXFNlbmRTdGF0dXNFbWFpbC54YW1sFAFhAWsBBAGPAQGZAQEDAb4BAdMBAQJIA2UOAgEBTAVVCgIBElYFVrsBAgENVwVeDgIBCV8FYxoCAQJME0woAgETTglTIQIBFVZZVocBAgEQVh5WLgIBDlwwXL4CAgEMWTFZPwIBCl/DAl/rAgIBB196X4oBAgEFX5ICX78CAgEDUUtRWQIBGVBiUGoCARdOwQFO4gECARY=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -121,7 +121,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SendStatusMailMessage_1" sap:VirtualizedContainerService.HintSize="376,710" />
+      <sap2010:ViewStateData Id="SendStatusMailMessage_1" sap:VirtualizedContainerService.HintSize="376,750" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

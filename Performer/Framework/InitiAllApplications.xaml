@@ -71,7 +71,7 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Get all applications from Config file ready for processing&#xD;&#xA;&#xD;&#xA;Using Config(&quot;OpenApps&quot;)" DisplayName="Initialization sequence" sap2010:WorkflowViewState.IdRef="Sequence_9">
+  <Sequence sap2010:Annotation.AnnotationText="Get all applications from Config file ready for processing&#xA;&#xA;Using Config(&quot;OpenApps&quot;)" DisplayName="Initialization sequence" sap2010:WorkflowViewState.IdRef="Sequence_9">
     <If Condition="[Config is Nothing]" DisplayName="If Config not, Load it" sap2010:WorkflowViewState.IdRef="If_3">
       <If.Then>
         <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke InitiAllSettings workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Framework\InitiAllSettings.xaml">
@@ -97,7 +97,7 @@
       </ui:ForEach.Body>
     </ui:ForEach>
     <ui:LogMessage DisplayName="Log started message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="All applications ready" />
-    <sads:DebugSymbol.Symbol>d0FDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xGcmFtZXdvcmtcSW5pdGlBbGxBcHBsaWNhdGlvbnMueGFtbBABXwFpAQJKA2UOAgEBSwVTCgIBDVQFVJsBAgELVQViEgIBBGMFY5UBAgECSxNLKAIBDk0JUSECARBUe1SYAQIBDFWKAVWAAgIBClsLXyMCAQVjemOSAQIBA09iT2oCARJNwQFN4gECARFdX11nAgEIW7sBW84BAgEG</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0tDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQZXJmb3JtZXJcRnJhbWV3b3JrXEluaXRpQWxsQXBwbGljYXRpb25zLnhhbWwQAV8BaQECSgNlDgIBAUsFUwoCAQ1UBVSbAQIBC1UFYhICAQRjBWOVAQIBAksTSygCAQ5NCVEhAgEQVHtUmAECAQxVigFVgAICAQpbC18jAgEFY3pjkgECAQNPYk9qAgESTcEBTeIBAgERXV9dZwIBCFu7AVvOAQIBBg==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

@@ -59,19 +59,25 @@
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="Colse Orchestrator web application" DisplayName="CloseApp" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <ui:InvokeWorkflowFile ContinueOnError="True" DisplayName="Invoke LogOut workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Orchestrator\LogOut.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <scg:Dictionary x:TypeArguments="x:String, Argument" />
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
     <ui:CloseApplication ContinueOnError="True" DisplayName="Close 'Orchestrator'" sap2010:WorkflowViewState.IdRef="CloseApplication_1">
       <ui:CloseApplication.Target>
         <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;html title='UiPath Orchestrator' /&gt;" TimeoutMS="1000" WaitForReady="INTERACTIVE" />
       </ui:CloseApplication.Target>
     </ui:CloseApplication>
     <ui:KillProcess Process="{x:Null}" ContinueOnError="True" DisplayName="Kill process 'iexplore.exe'" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="iexplore" />
-    <sads:DebugSymbol.Symbol>d0pDOlxVc2Vyc1xNaWhhaVRhdHVcRG9jdW1lbnRzXFVpUGF0aFxSZUZyYW1lV29ya1xPcmNoZXN0cmF0b3JcQ2xvc2VBcHAueGFtbAg9A0UOAgEBPgVCGwIBBUMFQ7IBAgECQEpAdgIBCECBAUCHAQIBBz4qPjACAQZDOEM+AgEEQ6UBQ68BAgED</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0NDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xEaXNwYXRjaGVyXE9yY2hlc3RyYXRvclxDbG9zZUFwcC54YW1sCz0DSg4CAQE+BUIdAgEJQwVHGwIBBUgFSLIBAgECPiw+MgIBCz6vAT7JAQIBCkVKRXYCAQhFgQFFhwECAQdDKkMwAgEGSDhIPgIBBEilAUivAQIBAw==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="314,87" />
       <sap2010:ViewStateData Id="CloseApplication_1" sap:VirtualizedContainerService.HintSize="314,68" />
       <sap2010:ViewStateData Id="KillProcess_1" sap:VirtualizedContainerService.HintSize="314,22" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="336,282">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="336,409">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -79,7 +85,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="CloseTerminal_1" sap:VirtualizedContainerService.HintSize="376,362" />
+      <sap2010:ViewStateData Id="CloseTerminal_1" sap:VirtualizedContainerService.HintSize="376,569" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

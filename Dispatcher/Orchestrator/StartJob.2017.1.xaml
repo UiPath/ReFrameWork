@@ -1,4 +1,4 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="StartOrchestratorJob" this:StartOrchestratorJob.Config="[new Dictionary(of String, Object) from {{&quot;NextJobName&quot;, &quot;HelloWorld_All&quot;}}]"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="StartOrchestratorJob" this:StartOrchestratorJob.Config="[new Dictionary(of String, Object) from {{&quot;NextJobName&quot;, &quot;HelloWorld_RFW-Test&quot;}}]"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
@@ -66,6 +66,9 @@
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="StartOrchestratorJob" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Default="[Config(&quot;NextJobName&quot;).ToString]" Name="jobName" />
+    </Sequence.Variables>
     <ui:BrowserScope Browser="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" BrowserType="IE" DisplayName="Attach Browser 'iexplore.exe UiPath'" sap2010:WorkflowViewState.IdRef="BrowserScope_1" Selector="&lt;html title='*UiPath*Orchestrator*' /&gt;">
       <ui:BrowserScope.Body>
         <ActivityAction x:TypeArguments="x:Object">
@@ -85,14 +88,9 @@
                 </ui:CursorPosition>
               </ui:Click.CursorPosition>
               <ui:Click.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;webctrl aaname=' Jobs' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;webctrl aaname='Jobs' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
               </ui:Click.Target>
             </ui:Click>
-            <ui:WaitUiElementVanish ContinueOnError="True" DisplayName="Wait Loader Vanish" sap2010:WorkflowViewState.IdRef="WaitUiElementVanish_1" WaitNotActive="False" WaitNotVisible="False">
-              <ui:WaitUiElementVanish.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;webctrl isleaf='1' tag='DIV' class='loader' /&gt;" TimeoutMS="2000" WaitForReady="INTERACTIVE" />
-              </ui:WaitUiElementVanish.Target>
-            </ui:WaitUiElementVanish>
             <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click BUTTON 'Start Job'" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
               <ui:Click.CursorPosition>
                 <ui:CursorPosition Position="Center">
@@ -105,7 +103,7 @@
                 </ui:CursorPosition>
               </ui:Click.CursorPosition>
               <ui:Click.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;webctrl aaname='Start Job' tag='BUTTON' /&gt;" WaitForReady="INTERACTIVE" />
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;webctrl aaname='play_arrow' tag='md-icon' /&gt;" WaitForReady="INTERACTIVE" />
               </ui:Click.Target>
             </ui:Click>
             <ui:Click DelayBefore="{x:Null}" ClickType="CLICK_SINGLE" DelayMS="500" DisplayName="Click SPAN 'Select Process'" sap2010:WorkflowViewState.IdRef="Click_4" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="True">
@@ -116,12 +114,17 @@
                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;webctrl aaname=' Select a process     ' tag='SPAN' /&gt;" WaitForReady="COMPLETE" />
               </ui:Click.Target>
             </ui:Click>
+            <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type into 'INPUT' Job Name" EmptyField="False" sap2010:WorkflowViewState.IdRef="TypeInto_1" SendWindowMessages="False" SimulateType="True" Text="[jobName]">
+              <ui:TypeInto.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;webctrl aaname='Select a process' tag='INPUT' type='text' /&gt;" WaitForReady="INTERACTIVE" />
+              </ui:TypeInto.Target>
+            </ui:TypeInto>
             <ui:Click DelayBefore="{x:Null}" ClickType="CLICK_SINGLE" DelayMS="1000" DisplayName="Click A 'Job Name'" sap2010:WorkflowViewState.IdRef="Click_5" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="True">
               <ui:Click.CursorPosition>
                 <ui:CursorPosition OffsetX="{x:Null}" OffsetY="{x:Null}" Position="Center" />
               </ui:Click.CursorPosition>
               <ui:Click.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="[&quot;&lt;webctrl aaname='&quot;+Config(&quot;NextJobName&quot;).ToString+&quot;' tag='A' /&gt;&quot;]" WaitForReady="COMPLETE" />
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="[&quot;&lt;webctrl aaname='&quot;+jobName+&quot;' tag='A' /&gt;&quot;]" WaitForReady="COMPLETE" />
               </ui:Click.Target>
             </ui:Click>
             <ui:Click DelayBefore="{x:Null}" ClickType="CLICK_SINGLE" DelayMS="500" DisplayName="Click LABEL 'Select All'" sap2010:WorkflowViewState.IdRef="Click_6" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="True" SimulateClick="False">
@@ -129,7 +132,7 @@
                 <ui:CursorPosition OffsetX="{x:Null}" OffsetY="{x:Null}" Position="Center" />
               </ui:Click.CursorPosition>
               <ui:Click.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;webctrl tag='TR' aaname='*Robot Name*Machine Name*' /&gt;&lt;webctrl tag='DIV' /&gt;" WaitForReady="COMPLETE" />
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;webctrl tag='TR' aaname='*Robot*Machine*' /&gt;&lt;webctrl tag='TH' class='*ui-grid-column*' parentclass='ui-grid-row' /&gt;&lt;webctrl tag='INPUT' type='checkbox' isleaf='1' /&gt;" WaitForReady="COMPLETE" />
               </ui:Click.Target>
             </ui:Click>
             <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click BUTTON 'Start'" sap2010:WorkflowViewState.IdRef="Click_7" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="True">
@@ -137,40 +140,40 @@
                 <ui:CursorPosition OffsetX="{x:Null}" OffsetY="{x:Null}" Position="Center" />
               </ui:Click.CursorPosition>
               <ui:Click.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;webctrl aaname='Start' tag='BUTTON' type='button' /&gt;" WaitForReady="COMPLETE" />
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;webctrl aaname='Start' tag='SPAN' /&gt;" WaitForReady="COMPLETE" />
               </ui:Click.Target>
             </ui:Click>
           </Sequence>
         </ActivityAction>
       </ui:BrowserScope.Body>
     </ui:BrowserScope>
-    <sads:DebugSymbol.Symbol>d0pDOlxVc2Vyc1xNaWhhaVRhdHVcRG9jdW1lbnRzXFVpUGF0aFxSZUZyYW1lV29ya1xPcmNoZXN0cmF0b3JcU3RhcnRKb2IueGFtbBgBawHMAQECRAOUAQ4CAQFFBZIBFwIBAkXoAUWWAgIBGEsLjwEWAgEDTA1aGAIBFlsNXyYCARJgDW4YAgEQbw12GAIBDXcNfhgCAQl/DYYBGAIBBocBDY4BGAIBBFhnWJQBAgEXXVJdiQECARVdlAFdmgECARRbNVs7AgETbGdsmgECARF0Z3SlAQIBD29Pb1QCAQ58Z3zQAQIBC3dPd1UCAQqEAWeEAcEBAgEIf09/VAIBB4wBZ4wBpAECAQU=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0NDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xEaXNwYXRjaGVyXE9yY2hlc3RyYXRvclxTdGFydEpvYi54YW1sGAFrAdEBAQJEA5cBDgIBAUY0RmACAQJIBZUBFwIBBEjoAUiWAgIBGk4LkgEWAgEFTw1dGAIBGF4NbBgCARZtDXQYAgETdQ15GwIBD3oNgQEYAgELggENiQEYAgEIigENkQEYAgEGW2dbkwECARlqZ2qcAQIBF3JncqUBAgEVbU9tVAIBFHdnd6wBAgESdacCdbICAgEQf2d/rwECAQ16T3pVAgEMhwFnhwGhAgIBCoIBT4IBVAIBCY8BZ48BlAECAQc=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="Click_1" sap:VirtualizedContainerService.HintSize="314,68" />
-      <sap2010:ViewStateData Id="WaitUiElementVanish_1" sap:VirtualizedContainerService.HintSize="314,68" />
       <sap2010:ViewStateData Id="Click_2" sap:VirtualizedContainerService.HintSize="314,68" />
       <sap2010:ViewStateData Id="Click_4" sap:VirtualizedContainerService.HintSize="314,68" />
+      <sap2010:ViewStateData Id="TypeInto_1" sap:VirtualizedContainerService.HintSize="314,96" />
       <sap2010:ViewStateData Id="Click_5" sap:VirtualizedContainerService.HintSize="314,68" />
       <sap2010:ViewStateData Id="Click_6" sap:VirtualizedContainerService.HintSize="314,68" />
       <sap2010:ViewStateData Id="Click_7" sap:VirtualizedContainerService.HintSize="314,68" />
-      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="336,840">
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="336,868">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="BrowserScope_1" sap:VirtualizedContainerService.HintSize="414,948" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="436,1072">
+      <sap2010:ViewStateData Id="BrowserScope_1" sap:VirtualizedContainerService.HintSize="414,976" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="436,1100">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="StartOrchestratorJob_1" sap:VirtualizedContainerService.HintSize="476,1152" />
+      <sap2010:ViewStateData Id="StartOrchestratorJob_1" sap:VirtualizedContainerService.HintSize="476,1180" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

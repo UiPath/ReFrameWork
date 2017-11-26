@@ -1,7 +1,7 @@
 {
-  "description": "Robotic Enterprise Framework Templates",
+  "description": "Robotic Enterprise Framework Template",
   "version": "2016.2.6274.33252",
-  "main": "Test.xaml",
+  "main": "Framework/Main.xaml",
   "id": "ReFrameWork",
   "dependencies": {},
   "configurationOptions": {},
