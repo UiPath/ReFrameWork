@@ -1,5 +1,25 @@
-### ReFrameWork Template ###
+### Tripartite Process Model ###
+
+Many business processes in the enterprise world follow this pattern:
+
+* Some Excel files come by email
+* Actions required for each row
+* Updated Excel files sent back
+
+To automate this kind of process with UiPath, we split it in three phases:
+
+1. Monitor email, download attachments and upload data to Orchestrator queue
+2. Process items in queue with several robots in parallel to keep up with volumes
+3. Assemble data back to Excel files with new info/status and send them back
+
+Leading phases 1&3 can be executed by a robot in one *Dispatcher* project with a recursive schedule.
+The main *Performer* structure handles application interaction and status updates in the 2nd phase.
+
+
+### ReFrameWork Performer ###
 **Robotic Enterprise Framework**
+
+
 
 * built on top of *Transactional Business Process* template
 * using *State Machine* layout for the phases of automation project
@@ -46,13 +66,15 @@
 4. Implement ProcessTransaction workflow and any invoked others
 
 
-### Extra Workflows ###
+### ReFrameWork Dispatcher ###
+**Robotic Enterprise Framework**
 
-Many enterprise processes nowadays start and end with an Excel file attached to an email
-In a robotic world, such scenarios have three phases:
+
 1. Filter email, save Excel attachments and load all data into an Orchestrator transaction queue
-* Check out the *Xtras/OnloadQueue* sample that loads data from Excel in a queue tracking the file it belongs to and the row index
+    * Check out the *Xtras/OnloadQueue* sample that loads data from Excel in a queue tracking the file it belongs to and the row index
+
 2. Process the items in the transaction queue with multiple robots using *ReFrameWork template* passing items and statuses to a secondary queue
+
 3. Reassemble the Excel files with statuses from the secondary queue and send them via email
-* Check out the *Xtras/OffloadQueue* sample that saves items from a queue to Excel files
-* Check out the *Xtras/SendStatusEmail* that uses a template file for the message body
+    * Check out the *Xtras/OffloadQueue* sample that saves items from a queue to Excel files
+    * Check out the *Xtras/SendStatusEmail* that uses a template file for the message body

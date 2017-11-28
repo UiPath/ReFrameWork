@@ -1,23 +1,14 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Test" this:Test.input="11/10/2017 12:37 AM"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Test" mva:VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="Test_1"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
- xmlns:s="clr-namespace:System;assembly=mscorlib"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
- xmlns:this="clr-namespace:"
  xmlns:ui="http://schemas.uipath.com/workflow/activities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <x:Members>
-    <x:Property Name="input" Type="InArgument(x:String)" />
-  </x:Members>
-  <mva:VisualBasic.Settings>
-    <x:Null />
-  </mva:VisualBasic.Settings>
-  <sap2010:WorkflowViewState.IdRef>Test_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -65,14 +56,10 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
       <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Test" sap2010:WorkflowViewState.IdRef="Sequence_2">
-    <Sequence.Variables>
-      <Variable x:TypeArguments="s:DateTime" Name="output" />
-      <Variable x:TypeArguments="x:Boolean" Name="dateParse" />
-      <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" Default="[new dictionary(of String, Object)]" Name="dict" />
-    </Sequence.Variables>
     <Parallel sap2010:WorkflowViewState.IdRef="Parallel_1">
       <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
         <ui:Click.CursorPosition>
@@ -91,7 +78,7 @@
       </ui:Click>
       <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_2" Text="Hello World!" TopMost="True" />
     </Parallel>
-    <sads:DebugSymbol.Symbol>dydDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xUZXN0LnhhbWwJAUoBXgECRgNfDgIBAUpOSnMCAQJMBV0QAgEDTQdbEgIBBlwHXLwBAgEEWUxZsQECAQhZvAFZwgECAQdcnAFcqgECAQU=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dydDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xUZXN0LnhhbWwHPgNSDgIBAT8FUBACAQJAB04SAgEFTwdPvAECAQNMTEyxAQIBB0y8AUzCAQIBBk+cAU+qAQIBBA==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -105,7 +92,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Test_1" sap:VirtualizedContainerService.HintSize="844,438" />
+      <sap2010:ViewStateData Id="Test_1" sap:VirtualizedContainerService.HintSize="844,318" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
