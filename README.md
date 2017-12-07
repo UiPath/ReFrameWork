@@ -13,18 +13,19 @@ To automate this kind of process with UiPath, we split it in three phases:
 2. Process items in queue with several robots in parallel to keep up with volumes
 3. Assemble data back to Excel files with new info/status and send them back
 
-Leading phases 1&3 can be executed by a robot in one *Dispatcher* project with a recursive schedule.
+Leading phases 1&3 can be executed by a single robot in one *Dispatcher* process with a recursive schedule.
+
 The main *Performer* structure handles application interaction and status updates in the 2nd phase.
 
 ### ReFrameWork Dispatcher ###
 
 Filter email, save Excel attachments and load all data into an Orchestrator transaction queue
-	* Check out *Dispatcher/FetchAttachments* that filters Inbox email by Config("EmailFilter") and downloads the attachments
-    * Check out *Dispatcher/OnloadQueue* that loads data from Excel files in a queue, tracking the file it belongs to and the row index
+* Check out *Dispatcher/FetchAttachments* that filters Inbox email by Config("EmailFilter") and downloads the attachments
+* Check out *Dispatcher/OnloadQueue* that loads data from Excel files in a queue, tracking the file it belongs to and the row index
 
 Reassemble the Excel files with statuses from the secondary queue and send them when complete via email
-    * Check out *Dispatcher/OffloadQueue* sample that saves items from a queue to Excel files using a header *ExcelTemplate.xlsx*
-    * Check out *Dispatcher/SendStatusEmail* that uses a *EmailTemplate.txt* file with String.Format for the message body
+* Check out *Dispatcher/OffloadQueue* sample that saves items from a queue to Excel files using a header *ExcelTemplate.xlsx*
+* Check out *Dispatcher/SendStatusEmail* that uses a *EmailTemplate.txt* file with String.Format for the message body
 
 
 ### ReFrameWork Performer ###
@@ -38,7 +39,7 @@ Reassemble the Excel files with statuses from the secondary queue and send them 
 * saves screenshots and error messages in case of application exceptions
 * runs out of the box sample Notepad application with dummy Excel input data
 
-** How It Works **
+## How It Works ##
 
 1. **INITIALIZE PROCESS**
  + *InitiAllSettings* - Load config data from file and from assets
