@@ -1,8 +1,8 @@
 {
-  "description": "Robotic Enterprise Framework Template",
+  "description": "Robotic Enterprise Framework Performer",
   "version": "2016.2.6274.33252",
   "main": "Framework/Main.xaml",
-  "id": "ReFrameWork",
+  "id": "RFW-Performer",
   "dependencies": {},
   "configurationOptions": {},
   "excludedData": [

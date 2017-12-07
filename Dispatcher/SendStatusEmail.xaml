@@ -1,4 +1,4 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="SendStatusEmail" this:SendStatusEmail.Config="[Nothing]" this:SendStatusEmail.ProcessError="[Nothing]" this:SendStatusEmail.ProcessDetail="Have a wonderful day"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="SendStatusEmail" this:SendStatusEmail.Config="[Nothing]" this:SendStatusEmail.FilePath="[Nothing]" this:SendStatusEmail.Detail="Have a wonderful day"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
@@ -13,8 +13,8 @@
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
-    <x:Property Name="ProcessError" Type="InArgument(x:String)" />
-    <x:Property Name="ProcessDetail" Type="InArgument(x:String)" />
+    <x:Property Name="FilePath" Type="InArgument(x:String)" />
+    <x:Property Name="Detail" Type="InArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
@@ -69,10 +69,11 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Send email report with execution status" DisplayName="SendStatusEmail" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="SendStatusEmail" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="emailMessage" />
     </Sequence.Variables>
+    <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="Emailing processed files..." />
     <If Condition="[Config is Nothing]" DisplayName="If Config not, Load it" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke InitiAllSettings workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\InitiAllSettings.xaml">
@@ -89,18 +90,21 @@
         <OutArgument x:TypeArguments="x:String">[emailMessage]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:String">[String.Format(emailMessage, Config("ProcessName"), If(ProcessError is Nothing, "completed successfully", "ended with error"), If(ProcessError is Nothing, ProcessDetail, ProcessError), Config("RobotName").ToString + Environment.NewLine + "@"+System.Net.Dns.GetHostName)]</InArgument>
+        <InArgument x:TypeArguments="x:String">[String.Format(emailMessage, Config("ProcessName"), Detail, Config("RobotName"), "@"+System.Net.Dns.GetHostName)]</InArgument>
       </Assign.Value>
     </Assign>
     <ui:SendOutlookMail Account="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Body="[emailMessage]" DisplayName="Send Outlook Mail Message" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" IsBodyHtml="False" IsDraft="False" Subject="[Config(&quot;EmailSubject&quot;).ToString]" To="[Config(&quot;EmailTo&quot;).ToString]">
       <ui:SendOutlookMail.Files>
-        <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4" />
+        <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
+          <InArgument x:TypeArguments="x:String">[FilePath]</InArgument>
+        </scg:List>
       </ui:SendOutlookMail.Files>
     </ui:SendOutlookMail>
-    <sads:DebugSymbol.Symbol>dz1DOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xEaXNwYXRjaGVyXFNlbmRTdGF0dXNFbWFpbC54YW1sFAFhAWsBBAGPAQGZAQEDAb4BAdMBAQJIA2UOAgEBTAVVCgIBElYFVrsBAgENVwVeDgIBCV8FYxoCAQJME0woAgETTglTIQIBFVZZVocBAgEQVh5WLgIBDlwwXL4CAgEMWTFZPwIBCl/DAl/rAgIBB196X4oBAgEFX5ICX78CAgEDUUtRWQIBGVBiUGoCARdOwQFO4gECARY=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dz1DOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xEaXNwYXRjaGVyXFNlbmRTdGF0dXNFbWFpbC54YW1sFwGzAQHIAQEEAWEBawEDAYsBAZUBAQJIA2gOAgEBTAVMkgECASBNBVYKAgEYVwVXuwECARNYBV8OAgELYAVmGgIBAkxyTI8BAgEhTRNNKAIBGU8JVCECARtXWVeHAQIBFlceVy4CARRdMF2hAQIBDloxWj8CAQxgwwJg6wICAQljMmM8AgEHYHpgigECAQVgkgJgvwICAQNSS1JZAgEfUWJRagIBHU/BAU/iAQIBHA==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="314,93" />
       <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="314,87" />
       <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="314,52">
         <sap:WorkflowViewStateService.ViewState>
@@ -113,15 +117,14 @@
       <sap2010:ViewStateData Id="ReadTextFile_1" sap:VirtualizedContainerService.HintSize="314,59" />
       <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="314,60" />
       <sap2010:ViewStateData Id="SendOutlookMail_1" sap:VirtualizedContainerService.HintSize="314,147" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="336,590">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="336,695">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SendStatusMailMessage_1" sap:VirtualizedContainerService.HintSize="376,750" />
+      <sap2010:ViewStateData Id="SendStatusMailMessage_1" sap:VirtualizedContainerService.HintSize="376,775" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

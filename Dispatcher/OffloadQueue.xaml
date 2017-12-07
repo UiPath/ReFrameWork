@@ -80,18 +80,23 @@
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:Int32)" Default="[new Dictionary(of String, Int32)]" Name="fileIndex" />
       <Variable x:TypeArguments="x:Int32" Default="0" Name="transCount" />
       <Variable x:TypeArguments="x:Int32" Name="transFailed" />
-      <Variable x:TypeArguments="x:String" Name="filedName" />
+      <Variable x:TypeArguments="x:String" Name="fileName" />
       <Variable x:TypeArguments="sd:DataTable" Name="transData" />
       <Variable x:TypeArguments="x:Boolean" Default="False" Name="useTemplate" />
       <Variable x:TypeArguments="x:String" Name="templatePath" />
     </Sequence.Variables>
+    <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Info" Message="Offloading queue..." />
     <Sequence DisplayName="Extract config/settings" sap2010:WorkflowViewState.IdRef="Sequence_26">
-      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Load all settings from Config file" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="Framework/InitiAllSettings.xaml">
-        <ui:InvokeWorkflowFile.Arguments>
-          <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="Settings">[Config]</InOutArgument>
-          <InArgument x:TypeArguments="s:String[]" x:Key="ConfigSheets">[{"Dispatch"}]</InArgument>
-        </ui:InvokeWorkflowFile.Arguments>
-      </ui:InvokeWorkflowFile>
+      <If Condition="[Config is Nothing]" DisplayName="If Config not, Load it" sap2010:WorkflowViewState.IdRef="If_15">
+        <If.Then>
+          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Load all settings from Config file" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="Framework/InitiAllSettings.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="Settings">[Config]</InOutArgument>
+              <InArgument x:TypeArguments="s:String[]" x:Key="ConfigSheets">[{"Dispatch"}]</InArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+        </If.Then>
+      </If>
       <Assign DisplayName="Set output path" sap2010:WorkflowViewState.IdRef="Assign_56">
         <Assign.To>
           <OutArgument x:TypeArguments="x:String">[outputPath]</OutArgument>
@@ -102,7 +107,7 @@
       </Assign>
       <Assign DisplayName="Set file name field" sap2010:WorkflowViewState.IdRef="Assign_57">
         <Assign.To>
-          <OutArgument x:TypeArguments="x:String">[filedName]</OutArgument>
+          <OutArgument x:TypeArguments="x:String">[fileName]</OutArgument>
         </Assign.To>
         <Assign.Value>
           <InArgument x:TypeArguments="x:String">[If(outputPath.Contains("["), outputPath.Split("[".ToCharArray)(1).Split("]".ToCharArray)(0), Nothing)]</InArgument>
@@ -178,7 +183,7 @@
                 <OutArgument x:TypeArguments="x:String">[filePath]</OutArgument>
               </Assign.To>
               <Assign.Value>
-                <InArgument x:TypeArguments="x:String">[outputPath.Replace("["+filedName+"]", transItem.SpecificContent(filedName).ToString)]</InArgument>
+                <InArgument x:TypeArguments="x:String">[outputPath.Replace("["+fileName+"]", transItem.SpecificContent(fileName).ToString)]</InArgument>
               </Assign.Value>
             </Assign>
             <Assign DisplayName="Count items per file" sap2010:WorkflowViewState.IdRef="Assign_68">
@@ -272,6 +277,32 @@
                 <ui:AppendRange DataTable="[transData]" DisplayName="Append range" sap2010:WorkflowViewState.IdRef="AppendRange_5" SheetName="[outputSheet]" WorkbookPath="[filePath]" />
               </If.Else>
             </If>
+            <If Condition="[transItem.SpecificContent.Keys.Contains(&quot;Index&quot;)]" DisplayName="If indexed file" sap2010:WorkflowViewState.IdRef="If_16">
+              <If.Then>
+                <Sequence DisplayName="Check complete file" sap2010:WorkflowViewState.IdRef="Sequence_35">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="x:Int32" Default="[CType(transItem.SpecificContent(&quot;Index&quot;).ToString.Split(&quot;/&quot;.ToCharArray)(1), Int32)]" Name="transIndex" />
+                    <Variable x:TypeArguments="sd:DataTable" Name="fileData" />
+                  </Sequence.Variables>
+                  <ui:ReadRange Range="{x:Null}" DataTable="[fileData]" DisplayName="Read range" sap2010:WorkflowViewState.IdRef="ReadRange_4" SheetName="[outputSheet]" WorkbookPath="[filePath]" />
+                  <If Condition="[fileData.Rows.Count = transIndex]" DisplayName="If complete file" sap2010:WorkflowViewState.IdRef="If_17">
+                    <If.Then>
+                      <Sequence DisplayName="Send, then park file" sap2010:WorkflowViewState.IdRef="Sequence_36">
+                        <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[Path.Combine(Directory.GetCurrentDirectory, Config(&quot;CompleteFolder&quot;).ToString, New FileInfo(filePath).Name)]" TopMost="True" />
+                        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SendStatusEmail workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="SendStatusEmail.xaml">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="Config">[Config]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="FilePath">[filePath]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="Detail">[If(transData.Columns.Contains("Status"), fileData.Select("[Status]='Complete'").Count.ToString+"/"+fileData.Rows.Count.ToString, Nothing)]</InArgument>
+                          </ui:InvokeWorkflowFile.Arguments>
+                        </ui:InvokeWorkflowFile>
+                        <ui:MoveFile ContinueOnError="True" Destination="[Path.Combine(Directory.GetCurrentDirectory, Config(&quot;CompleteFolder&quot;).ToString, New FileInfo(filePath).Name)]" DisplayName="Move out processed file" sap2010:WorkflowViewState.IdRef="MoveFile_1" Overwrite="True" Path="[filePath]" />
+                      </Sequence>
+                    </If.Then>
+                  </If>
+                </Sequence>
+              </If.Then>
+            </If>
             <ui:SetTransactionStatus Reason="{x:Null}" ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set transaction status" ErrorType="Business" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_7" Status="Successful" TransactionItem="[transItem]">
               <ui:SetTransactionStatus.Output>
                 <scg:Dictionary x:TypeArguments="x:String, InArgument" />
@@ -310,26 +341,34 @@
       </TryCatch>
     </While>
     <ui:LogMessage DisplayName="Log end message" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[&quot;Assembled &quot;+transCount.ToString+&quot; items&quot;]" />
-    <sads:DebugSymbol.Symbol>dzpDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xEaXNwYXRjaGVyXE9mZmxvYWRRdWV1ZS54YW1scEsDugIOAgEBUE1QcQIBBFEzUTYCAQNVNVU8AgECWAV/EAMBhgGAAQWfARACAXWgAQWgAeIBAgFwoQEFtwINAgEIuAIFuAK6AQIBBVkHXh8DAZoBXwdmEAMBlQFnB24QAwGPAW8HdhADAYsBdwd+EAMBhwGCAQmMARQCAXqUAQ2bARYCAXagAZUBoAHBAQIBc6AB0gGgAd8BAgFxogEHtgISAgEKoQFioQF9AgEJuAJ2uAK3AQIBBlxJXFcDAZ4BW2BbaAMBnAFZwgFZ4wEDAZsBZDJkUQMBmAFhM2E/AwGWAWwybJkBAwGSAWkzaT4DAZABdDJ0hQEDAY4BcTNxQAMBjAF8MnyKAQMBigF5M3lBAwGIAYMBC4MBywECAX+EAQuLARQCAXuZATmZAT4CAXmWATqWAUcCAXekAQuYAhYCAR60Agu0Au0BAgEZoAIPrwIaAgELgwE0gwFBAwGEAYMBmwGDAaoBAwGCAYMBuAGDAcgBAwGAAYkBN4kBVwIBfoYBOIYBRQIBfKgBDa8BFgIBa7ABDbcBFgIBZ7gBDb8BFgIBYsABDYcCGAIBPIgCDZICEgIBIpMCDZcCJwIBH7QCoAG0AswBAgEctALdAbQC6gECARqhAhGhAp4BAgEWogIRpgIrAgERpwIRrgIaAgEMrQE3rQFHAgFuqgE4qgFEAgFstQE4tQGOAQIBarIBObIBQwIBaL0BN70BegIBZroBOLoBTQIBY8QBD9YBFAIBWdcBD+gBFAIBTekBD/ABGAIBSfEBD4UCHAIBQoYCD4YCqgECAT2IAhuIAjYCASOKAhGNAhwCAS2QAhGQAroBAgEmkwKCApMCjwICASChAoYBoQKbAQIBF6IC2gGiAu8BAgEUogKQAqICnQICARKsAjusAkwCAQ+pAjypAkkCAQ3EAR3EATUCAVrGARPNARwCAV7QARPUASICAVvXAR3XAU8CAU7ZARPmASACAU/uATzuAU4CAUzrAT3rAUYCAUrxAZoB8QGvAQIBSPcBFYICGgIBQ4YCOoYCRQIBQIYCUIYCXQIBPosCE4sCyQECATaMAhOMAukBAgEukAIrkAI4AgErkAKOAZACnQECASmQAqsBkAK3AQIBJ8sBQssBUwIBYcgBQ8gBTgIBX9IBQtIBTQIBXNkBnwHZAcEBAgFY3wEZ4wEeAgFQ9wEj9wFhAgFE+QEZgAIiAgFFiwIwiwI2AgE7iwJDiwJPAgE5iwK2AYsCxgECATeMAsgBjALMAQIBNYwCPowCSwIBM4wCqwGMAroBAgExjALaAYwC5gECAS/fASffAUwCAVHhAR3hAcwCAgFS/gFE/gFyAgFH+wFF+wFWAgFG4QG/AeEBygECAVfhAZAB4QGZAQIBVeEBpAHhAbEBAgFT</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzpDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xEaXNwYXRjaGVyXE9mZmxvYWRRdWV1ZS54YW1sigFLA9kCDgIBAVBNUHECAQRRM1E2AgEDVTVVPAIBAlgFWIsBAwG+AVkFhAEQAwGiAYUBBaQBEAMBkQGlAQWlAeIBAwGMAaYBBdYCDQIBCNcCBdcCugECAQVYc1iIAQMBvwFaB2MMAwG2AWQHaxADAbEBbAdzEAMBqwF0B3sQAwGnAXwHgwEQAwGjAYcBCZEBFAMBlgGZAQ2gARYDAZIBpQGVAaUBwQEDAY8BpQHSAaUB3wEDAY0BpwEH1QISAgEKpgFipgF9AgEJ1wJ21wK3AQIBBloVWioDAbcBXAthIwMBuQFpMmlRAwG0AWYzZj8DAbIBcTJxmQEDAa4BbjNuPQMBrAF5MnmFAQMBqgF2M3ZAAwGoAYEBMoEBigEDAaYBfjN+QQMBpAGIAQuIAcsBAwGbAYkBC5ABFAMBlwGeATmeAT4DAZUBmwE6mwFHAwGTAakBC7cCFgIBHtMCC9MC7QECARm/Ag/OAhoCAQtfTV9bAwG9AV5kXmwDAbsBXMYBXOcBAwG6AYgBNIgBQQMBoAGIAZsBiAGqAQMBngGIAbgBiAHIAQMBnAGOATeOAVcDAZoBiwE4iwFFAwGYAa0BDbQBFgMBhwG1AQ28ARYDAYMBvQENxAEWAgF+xQENjAIYAgFYjQINlwISAgE+mAINsQISAgEisgINtgInAgEf0wKgAdMCzAECARzTAt0B0wLqAQIBGsACEcACngECARbBAhHFAisCARHGAhHNAhoCAQyyATeyAUcDAYoBrwE4rwFEAwGIAboBOLoBjAEDAYYBtwE5twFDAwGEAcIBN8IBegMBggG/ATi/AU0CAX/JAQ/bARQCAXXcAQ/tARQCAWnuAQ/1ARgCAWX2AQ+KAhwCAV6LAg+LAqoBAgFZjQIbjQI2AgE/jwIRkgIcAgFJlQIRlQK6AQIBQpgCG5gCWQIBI5oCEa8CHAIBJLICggKyAo8CAgEgwAKGAcACmwECARfBAtoBwQLvAQIBFMECkALBAp0CAgESywI7ywJMAgEPyAI8yAJJAgENyQEdyQE1AgF2ywET0gEcAgF61QET2QEiAgF33AEd3AFPAgFq3gET6wEgAgFr8wE88wFOAgFo8AE98AFGAgFm9gGaAfYBrwECAWT8ARWHAhoCAV+LAjqLAkUCAVyLAlCLAl0CAVqQAhOQAskBAgFSkQITkQLpAQIBSpUCK5UCOAIBR5UCjgGVAp0BAgFFlQKrAZUCtwECAUOcAkGcAqwBAgElnwITnwLGAQIBN6ACE64CGAIBJtABQtABUwIBfc0BQ80BTgIBe9cBQtcBTQIBeN4BnwHeAcEBAgF05AEZ6AEeAgFs/AEj/AFhAgFg/gEZhQIiAgFhkAIwkAI2AgFXkAJDkAJPAgFVkAK2AZACxgECAVORAsgBkQLMAQIBUZECPpECSwIBT5ECqwGRAroBAgFNkQLaAZEC5gECAUufAjyfAkgCATyfApoBnwKpAQIBOp8CtwGfAsMBAgE4oAIhoAJFAgEnogIXrAIiAgEo5AEn5AFMAgFt5gEd5gHMAgIBboMCRIMCcgIBY4ACRYACVgIBYqMCGaMCuQICATWkAhmqAjECAS6rAhmrArsCAgEp5gG/AeYBygECAXPmAZAB5gGZAQIBceYBpAHmAbEBAgFvowKuAaMCpwICATaoAlOoAt4BAgE0pgJtpgJ1AgEypALRAaQC5wECATGnAlWnAl8CAS+rAjarAjwCAS2rAkmrAsIBAgEsqwKsAqsCuAICASo=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="LogMessage_10" sap:VirtualizedContainerService.HintSize="677,93" />
       <sap2010:ViewStateData Id="InvokeWorkflowFile_10" sap:VirtualizedContainerService.HintSize="314,87">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Assign_56" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="Assign_57" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="Assign_58" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="Assign_59" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="Sequence_26" sap:VirtualizedContainerService.HintSize="336,611">
+      <sap2010:ViewStateData Id="If_15" sap:VirtualizedContainerService.HintSize="464,237">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_56" sap:VirtualizedContainerService.HintSize="464,60" />
+      <sap2010:ViewStateData Id="Assign_57" sap:VirtualizedContainerService.HintSize="464,60" />
+      <sap2010:ViewStateData Id="Assign_58" sap:VirtualizedContainerService.HintSize="464,60" />
+      <sap2010:ViewStateData Id="Assign_59" sap:VirtualizedContainerService.HintSize="464,60" />
+      <sap2010:ViewStateData Id="Sequence_26" sap:VirtualizedContainerService.HintSize="677,52">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <x:Boolean x:Key="IsPinned">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -352,20 +391,20 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_6" sap:VirtualizedContainerService.HintSize="336,52">
+      <sap2010:ViewStateData Id="TryCatch_6" sap:VirtualizedContainerService.HintSize="677,52">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="GetTransactionItem_7" sap:VirtualizedContainerService.HintSize="336,22" />
-      <sap2010:ViewStateData Id="Assign_66" sap:VirtualizedContainerService.HintSize="675,60" />
-      <sap2010:ViewStateData Id="Assign_67" sap:VirtualizedContainerService.HintSize="675,60" />
-      <sap2010:ViewStateData Id="Assign_68" sap:VirtualizedContainerService.HintSize="675,60" />
+      <sap2010:ViewStateData Id="GetTransactionItem_7" sap:VirtualizedContainerService.HintSize="677,22" />
+      <sap2010:ViewStateData Id="Assign_66" sap:VirtualizedContainerService.HintSize="611,60" />
+      <sap2010:ViewStateData Id="Assign_67" sap:VirtualizedContainerService.HintSize="611,60" />
+      <sap2010:ViewStateData Id="Assign_68" sap:VirtualizedContainerService.HintSize="611,60" />
       <sap2010:ViewStateData Id="Assign_69" sap:VirtualizedContainerService.HintSize="242,60" />
-      <sap2010:ViewStateData Id="InvokeMethod_1" sap:VirtualizedContainerService.HintSize="217.5,134" />
+      <sap2010:ViewStateData Id="InvokeMethod_1" sap:VirtualizedContainerService.HintSize="218.5,134" />
       <sap2010:ViewStateData Id="If_11" sap:VirtualizedContainerService.HintSize="605,284">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -397,12 +436,12 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="AddDataRow_1" sap:VirtualizedContainerService.HintSize="605,22" />
-      <sap2010:ViewStateData Id="Sequence_34" sap:VirtualizedContainerService.HintSize="675,160">
+      <sap2010:ViewStateData Id="Sequence_34" sap:VirtualizedContainerService.HintSize="611,160">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -412,20 +451,41 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="AppendRange_5" sap:VirtualizedContainerService.HintSize="314,115" />
-      <sap2010:ViewStateData Id="If_10" sap:VirtualizedContainerService.HintSize="675,451">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SetTransactionStatus_7" sap:VirtualizedContainerService.HintSize="675,22" />
-      <sap2010:ViewStateData Id="Sequence_33" sap:VirtualizedContainerService.HintSize="697,1137">
+      <sap2010:ViewStateData Id="AppendRange_5" sap:VirtualizedContainerService.HintSize="314,115" />
+      <sap2010:ViewStateData Id="If_10" sap:VirtualizedContainerService.HintSize="611,52">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ReadRange_4" sap:VirtualizedContainerService.HintSize="464,87" />
+      <sap2010:ViewStateData Id="MessageBox_1" sap:VirtualizedContainerService.HintSize="314,59" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_11" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="MoveFile_1" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="Sequence_36" sap:VirtualizedContainerService.HintSize="336,372">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_17" sap:VirtualizedContainerService.HintSize="464,522" />
+      <sap2010:ViewStateData Id="Sequence_35" sap:VirtualizedContainerService.HintSize="486,773">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_16" sap:VirtualizedContainerService.HintSize="611,923" />
+      <sap2010:ViewStateData Id="SetTransactionStatus_7" sap:VirtualizedContainerService.HintSize="611,22" />
+      <sap2010:ViewStateData Id="Sequence_33" sap:VirtualizedContainerService.HintSize="633,1701">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -443,7 +503,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Catch`1_7" sap:VirtualizedContainerService.HintSize="701,449">
+      <sap2010:ViewStateData Id="Catch`1_7" sap:VirtualizedContainerService.HintSize="637,449">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -452,7 +512,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="GetTransactionItem_8" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="TryCatch_7" sap:VirtualizedContainerService.HintSize="715,1900">
+      <sap2010:ViewStateData Id="TryCatch_7" sap:VirtualizedContainerService.HintSize="651,2464">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -460,7 +520,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="While_3" sap:VirtualizedContainerService.HintSize="336,52">
+      <sap2010:ViewStateData Id="While_3" sap:VirtualizedContainerService.HintSize="677,2624">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -468,7 +528,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="LogMessage_9" sap:VirtualizedContainerService.HintSize="336,52">
+      <sap2010:ViewStateData Id="LogMessage_9" sap:VirtualizedContainerService.HintSize="677,93">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -476,7 +536,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_31" sap:VirtualizedContainerService.HintSize="358,1073">
+      <sap2010:ViewStateData Id="Sequence_31" sap:VirtualizedContainerService.HintSize="699,3260">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -484,11 +544,11 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="398,1193">
+      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="739,3540">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="ShouldCollapseAll">True</x:Boolean>
-            <x:Boolean x:Key="ShouldExpandAll">False</x:Boolean>
+            <x:Boolean x:Key="ShouldCollapseAll">False</x:Boolean>
+            <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>

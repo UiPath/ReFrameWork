@@ -1,4 +1,5 @@
 ### Tripartite Process Model ###
+**Robotic Enterprise Framework**
 
 Many business processes in the enterprise world follow this pattern:
 
@@ -15,11 +16,18 @@ To automate this kind of process with UiPath, we split it in three phases:
 Leading phases 1&3 can be executed by a robot in one *Dispatcher* project with a recursive schedule.
 The main *Performer* structure handles application interaction and status updates in the 2nd phase.
 
+### ReFrameWork Dispatcher ###
+
+Filter email, save Excel attachments and load all data into an Orchestrator transaction queue
+	* Check out *Dispatcher/FetchAttachments* that filters Inbox email by Config("EmailFilter") and downloads the attachments
+    * Check out *Dispatcher/OnloadQueue* that loads data from Excel files in a queue, tracking the file it belongs to and the row index
+
+Reassemble the Excel files with statuses from the secondary queue and send them when complete via email
+    * Check out *Dispatcher/OffloadQueue* sample that saves items from a queue to Excel files using a header *ExcelTemplate.xlsx*
+    * Check out *Dispatcher/SendStatusEmail* that uses a *EmailTemplate.txt* file with String.Format for the message body
+
 
 ### ReFrameWork Performer ###
-**Robotic Enterprise Framework**
-
-
 
 * built on top of *Transactional Business Process* template
 * using *State Machine* layout for the phases of automation project
@@ -27,13 +35,10 @@ The main *Performer* structure handles application interaction and status update
 * keeps external settings in *Config.xlsx* file and Orchestrator assets
 * pulls credentials from *Credential Manager* and Orchestrator assets
 * gets transaction data from Orchestrator queue and updates back status
-* takes screenshots in case of application exceptions
-* provides extra utility workflows like sending a templated email
-* runs sample Notepad application with dummy Excel input data
-* 
+* saves screenshots and error messages in case of application exceptions
+* runs out of the box sample Notepad application with dummy Excel input data
 
-
-### How It Works ###
+** How It Works **
 
 1. **INITIALIZE PROCESS**
  + *InitiAllSettings* - Load config data from file and from assets
@@ -64,17 +69,3 @@ The main *Performer* structure handles application interaction and status update
 2. Implement OpenApp and CloseApp workflows in your App folder, linking them in the Config.xlsx fields
 3. Implement GetTransactionData and SetTransactionStatus or use ./Framework versions for Orchestrator queues
 4. Implement ProcessTransaction workflow and any invoked others
-
-
-### ReFrameWork Dispatcher ###
-**Robotic Enterprise Framework**
-
-
-1. Filter email, save Excel attachments and load all data into an Orchestrator transaction queue
-    * Check out the *Xtras/OnloadQueue* sample that loads data from Excel in a queue tracking the file it belongs to and the row index
-
-2. Process the items in the transaction queue with multiple robots using *ReFrameWork template* passing items and statuses to a secondary queue
-
-3. Reassemble the Excel files with statuses from the secondary queue and send them via email
-    * Check out the *Xtras/OffloadQueue* sample that saves items from a queue to Excel files
-    * Check out the *Xtras/SendStatusEmail* that uses a template file for the message body
