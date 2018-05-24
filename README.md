@@ -6,9 +6,7 @@
 * Level 3- Advanced Trainning in progress
 
 
-[UiPath Link]
-
-(https://github.com/atulkumarpccs/ReFrameWork/blob/master/Documentation/Trainning%20Status%20screenshot.PNG)
+![UiPath Link](https://github.com/atulkumarpccs/ReFrameWork/blob/master/Documentation/Trainning Status screenshot.PNG)
 
 
 ### Documentation is included in the Documentation folder ###
