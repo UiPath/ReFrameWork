@@ -89,7 +89,7 @@
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Attach" sap2010:WorkflowViewState.IdRef="Sequence_9">
+          <Sequence DisplayName="With Window" sap2010:WorkflowViewState.IdRef="Sequence_9">
             <ui:Activate DelayBefore="{x:Null}" DelayMS="{x:Null}" sap2010:WorkflowViewState.IdRef="Activate_1">
               <ui:Activate.Target>
                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" WaitForReady="INTERACTIVE" />
@@ -100,11 +100,19 @@
                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;wnd cls='Edit' /&gt;&lt;ctrl role='editable text' /&gt;" WaitForReady="INTERACTIVE" />
               </ui:TypeInto.Target>
             </ui:TypeInto>
+            <Assign DisplayName="Set sample outcome" sap2010:WorkflowViewState.IdRef="Assign_1">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Object">[TransactionData("Complete")]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Object">[new Random().Next(1,100)]</InArgument>
+              </Assign.Value>
+            </Assign>
           </Sequence>
         </ActivityAction>
       </ui:WindowScope.Body>
     </ui:WindowScope>
-    <sads:DebugSymbol.Symbol>dzVDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQcm9jZXNzVHJhbnNhY3Rpb24ueGFtbBBIA2wOAgEBTAVQCgIBDVEFVQoCAQlWBWoWAgECTBNMNwIBDk4JTrIBAgEPURNRNwIBClMJU6wBAgELVtMBVpYCAgEIXAtnFgIBA05BToUBAgEQU0RTfwIBDF0NYRsCAQdiDWYbAgEEZGdkpAECAQZipgJioAMCAQU=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dz9DOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQZXJmb3JtZXJcUHJvY2Vzc1RyYW5zYWN0aW9uLnhhbWwTSAN0DgIBAUwFUAoCARFRBVUKAgENVgVyFgIBAkwTTDcCARJOCU6yAQIBE1ETUTcCAQ5TCVOsAQIBD1bTAVaWAgIBDFwLbxYCAQNOQU6FAQIBFFNEU38CARBdDWEbAgELYg1mGwIBCGcNbhYCAQRkZ2SkAQIBCmKmAmKgAwIBCWw4bFICAQdpOWlWAgEF</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -114,15 +122,16 @@
       <sap2010:ViewStateData Id="If_10" sap:VirtualizedContainerService.HintSize="464,210" />
       <sap2010:ViewStateData Id="Activate_1" sap:VirtualizedContainerService.HintSize="314,68" />
       <sap2010:ViewStateData Id="TypeInto_1" sap:VirtualizedContainerService.HintSize="314,96" />
-      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="336,328">
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="336,428">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="WindowScope_1" sap:VirtualizedContainerService.HintSize="464,436" />
-      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="486,1088">
+      <sap2010:ViewStateData Id="WindowScope_1" sap:VirtualizedContainerService.HintSize="464,536" />
+      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="486,1188">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -130,7 +139,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Transaction_1" sap:VirtualizedContainerService.HintSize="526,1208" />
+      <sap2010:ViewStateData Id="Transaction_1" sap:VirtualizedContainerService.HintSize="526,1308" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

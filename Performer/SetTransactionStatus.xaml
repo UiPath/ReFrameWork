@@ -7,6 +7,7 @@
  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:si="clr-namespace:System.IO;assembly=mscorlib"
  xmlns:this="clr-namespace:"
  xmlns:ui="http://schemas.uipath.com/workflow/activities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -105,7 +106,15 @@
         </ActivityAction>
       </ui:ExcelApplicationScope.Body>
     </ui:ExcelApplicationScope>
-    <sads:DebugSymbol.Symbol>dzdDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xTZXRUcmFuc2FjdGlvblN0YXR1cy54YW1sGwH4AgGCAwEGAeIBAewBAQUBlAIB2QIBBAFjAcMBAQMBqgMBtAMBAkkDbQ4CAQFKBUrCAQIBG0sFUwoCARRUBWsgAgECSnlKvwECARxLE0szAgEVTQlRIQIBF1SgAVTKAQIBEloLaBYCAQNPTE9UAgEZTcQBTegBAgEYXg1lFgIBDmYNZrUBAgEJZw1ntgECAQRjP2N3AgERYEBgRwIBD2YlZjwCAQ1mqAFmsgECAQtmmgFmogECAQpnJWc8AgEIZ6kBZ7MBAgEGZ5sBZ6MBAgEF</sads:DebugSymbol.Symbol>
+    <If Condition="[Status.StartsWith(&quot;Retry&quot;) OrElse CType(TransactionData(&quot;RowIndex&quot;), Int32) &lt; CType(TransactionData(&quot;RowCount&quot;), Int32) - 1]" DisplayName="If last item per file" sap2010:WorkflowViewState.IdRef="If_6">
+      <If.Else>
+        <InvokeMethod DisplayName="Invoke File.Move" sap2010:WorkflowViewState.IdRef="InvokeMethod_1" MethodName="Move" TargetType="si:File">
+          <InArgument x:TypeArguments="x:String">[Config("InputFile").ToString]</InArgument>
+          <InArgument x:TypeArguments="x:String">[Path.Combine(Config("OutputPath").ToString, new FileInfo(Config("InputFile").ToString).Name)]</InArgument>
+        </InvokeMethod>
+      </If.Else>
+    </If>
+    <sads:DebugSymbol.Symbol>d0FDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQZXJmb3JtZXJcU2V0VHJhbnNhY3Rpb25TdGF0dXMueGFtbCAB+AIBggMBBgHiAQHsAQEFAZQCAdkCAQQBYwHDAQEDAaoDAbQDAQJKA3YOAgEBSwVLwgECASFMBVQKAgEaVQVsIAIBCG0FdAoCAQJLeUu/AQIBIkwTTDMCARtOCVIhAgEdVaABVcoBAgEYWwtpFgIBCW0TbbMBAgEDbwlyGAIBBFBMUFQCAR9OxAFO6AECAR5fDWYWAgEUZw1ntQECAQ9oDWi2AQIBCnAycFACAQZxMnGQAQIBBWQ/ZHcCARdhQGFHAgEVZyVnPAIBE2eoAWeyAQIBEWeaAWeiAQIBEGglaDwCAQ5oqQFoswECAQxomwFoowECAQs=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -130,7 +139,9 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="464,547" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,1109">
+      <sap2010:ViewStateData Id="InvokeMethod_1" sap:VirtualizedContainerService.HintSize="218.5,134" />
+      <sap2010:ViewStateData Id="If_6" sap:VirtualizedContainerService.HintSize="464,284" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,1433">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -138,7 +149,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SetRequestStatus_1" sap:VirtualizedContainerService.HintSize="526,1189" />
+      <sap2010:ViewStateData Id="SetRequestStatus_1" sap:VirtualizedContainerService.HintSize="526,1439" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

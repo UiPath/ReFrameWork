@@ -90,7 +90,7 @@
         <OutArgument x:TypeArguments="ss:SecureString" x:Key="Password">[password]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="Starting Notepad..." />
+    <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="Re/Starting Notepad..." />
     <ui:OpenApplication ApplicationWindow="{x:Null}" Arguments="{x:Null}" TimeoutMS="{x:Null}" WorkingDirectory="{x:Null}" DisplayName="Open application 'Notepad'" FileName="[filepath]" sap2010:WorkflowViewState.IdRef="OpenApplication_2" Selector="&lt;wnd app='notepad.exe' cls='Notepad' title='* - Notepad' /&gt;">
       <ui:OpenApplication.Body>
         <ActivityAction x:TypeArguments="x:Object">
@@ -122,7 +122,7 @@
         </ActivityAction>
       </ui:OpenApplication.Body>
     </ui:OpenApplication>
-    <sads:DebugSymbol.Symbol>dzxDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQZXJmb3JtZXJcTm90ZXBhZFxPcGVuQXBwLnhhbWwaAVEB9gEBAkoDfg4CAQFONE5iAgEETzRPYAIBAlEFVR0CAR9WBVwdAgEXXQVdigECARVeBXwaAgEGUSxRMgIBIVGxAVHIAQIBIFlDWU8CAR1YQlhMAgEbWklaUwIBGVa+AVbgAQIBGF1yXYcBAgEWXvgBXrsCAgEUXq4BXroBAgESZAt5FgIBB2UNaRsCARFqDW4bAgENbw1zIQIBCXQNeB0CAQhsZ2ykAQIBEGqcAmq+AgIBDnFncaQBAgEMb4YCb5ICAgEK</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzxDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQZXJmb3JtZXJcTm90ZXBhZFxPcGVuQXBwLnhhbWwaAVEB9gEBAkoDfg4CAQFONE5iAgEETzRPYAIBAlEFVR0CAR9WBVwdAgEXXQVdjQECARVeBXwaAgEGUSxRMgIBIVGxAVHIAQIBIFlDWU8CAR1YQlhMAgEbWklaUwIBGVa+AVbgAQIBGF1yXYoBAgEWXvgBXrsCAgEUXq4BXroBAgESZAt5FgIBB2UNaRsCARFqDW4bAgENbw1zIQIBCXQNeB0CAQhsZ2ykAQIBEGqcAmq+AgIBDnFncaQBAgEMb4YCb5ICAgEK</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -156,7 +156,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="OpenRLS_1" sap:VirtualizedContainerService.HintSize="476,1392" />
+      <sap2010:ViewStateData Id="OpenRLS_1" sap:VirtualizedContainerService.HintSize="476,1352" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
