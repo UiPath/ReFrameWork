@@ -71,6 +71,8 @@
       <AssemblyReference>TimeSpan2</AssemblyReference>
       <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="Loads external settings from Config.xlsx file or Orchestrator assets into a Dictionary" DisplayName="Get All Settings" sap2010:WorkflowViewState.IdRef="Sequence_2">
@@ -83,29 +85,6 @@
         <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)">[new Dictionary(of String, object)]</InArgument>
       </Assign.Value>
     </Assign>
-    <Sequence sap2010:Annotation.AnnotationText="Default process name" DisplayName="Process Information" sap2010:WorkflowViewState.IdRef="Sequence_4">
-      <Sequence.Variables>
-        <Variable x:TypeArguments="x:String" Name="projectData" />
-        <Variable x:TypeArguments="x:String" Name="projectTag" />
-      </Sequence.Variables>
-      <ui:ReadTextFile Content="[projectData]" DisplayName="Read project file" FileName="project.json" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-      <Assign DisplayName="Set project tag" sap2010:WorkflowViewState.IdRef="Assign_24">
-        <Assign.To>
-          <OutArgument x:TypeArguments="x:String">[projectTag]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="x:String">[If(projectData.Contains("id"": """), "id"": """, "name"": """)]</InArgument>
-        </Assign.Value>
-      </Assign>
-      <Assign DisplayName="Set Process Name" sap2010:WorkflowViewState.IdRef="Assign_3">
-        <Assign.To>
-          <OutArgument x:TypeArguments="x:Object">[settings("ProcessName")]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="x:String">[projectData.Split({projectTag}, 2, StringSplitOptions.RemoveEmptyEntries)(1).Split("""".ToCharArray, 2)(0)]</InArgument>
-        </Assign.Value>
-      </Assign>
-    </Sequence>
     <ui:ForEach x:TypeArguments="x:String" DisplayName="For each Config sheet &lt;string&gt;" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[configSheets]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:String">
@@ -116,7 +95,7 @@
             <Sequence.Variables>
               <Variable x:TypeArguments="sd:DataTable" Name="configTable" />
             </Sequence.Variables>
-            <ui:ReadRange Range="{x:Null}" DataTable="[configTable]" DisplayName="Read range settings" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="[sheet]" WorkbookPath="[configFile]" />
+            <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[configTable]" DisplayName="Read range settings" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="[sheet]" WorkbookPath="[configFile]" />
             <ui:ForEachRow DataTable="[configTable]" DisplayName="For each row" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
               <ui:ForEachRow.Body>
                 <ActivityAction x:TypeArguments="sd:DataRow">
@@ -148,7 +127,7 @@
           <Sequence.Variables>
             <Variable x:TypeArguments="sd:DataTable" Name="assets" />
           </Sequence.Variables>
-          <ui:ReadRange Range="{x:Null}" DataTable="[assets]" DisplayName="Read range Assets" sap2010:WorkflowViewState.IdRef="ReadRange_3" SheetName="Assets" WorkbookPath="[configFile]" />
+          <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[assets]" DisplayName="Read range Assets" sap2010:WorkflowViewState.IdRef="ReadRange_3" SheetName="Assets" WorkbookPath="[configFile]" />
           <ui:ForEachRow DataTable="[assets]" DisplayName="For each row" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
             <ui:ForEachRow.Body>
               <ActivityAction x:TypeArguments="sd:DataRow">
@@ -160,8 +139,9 @@
                     <Sequence DisplayName="Get asset value" sap2010:WorkflowViewState.IdRef="Sequence_11">
                       <Sequence.Variables>
                         <Variable x:TypeArguments="ui:GenericValue" Name="assetValue" />
+                        <Variable x:TypeArguments="x:String" Default="[If(Settings.Keys.Contains(&quot;Environment&quot;), Settings(&quot;Environment&quot;).ToString, &quot;&quot;)]" Name="environment" />
                       </Sequence.Variables>
-                      <ui:GetRobotAsset TimeoutMS="{x:Null}" AssetName="[row(&quot;Asset&quot;).ToString]" DisplayName="Get Asset Value" sap2010:WorkflowViewState.IdRef="GetRobotAsset_4">
+                      <ui:GetRobotAsset TimeoutMS="{x:Null}" AssetName="[row(&quot;Asset&quot;).ToString+environment]" DisplayName="Get Asset Value" sap2010:WorkflowViewState.IdRef="GetRobotAsset_4">
                         <ui:GetRobotAsset.Value>
                           <OutArgument x:TypeArguments="ui:GenericValue">[assetValue]</OutArgument>
                         </ui:GetRobotAsset.Value>
@@ -184,7 +164,7 @@
                         </ActivityAction.Argument>
                         <If Condition="[String.IsNullOrEmpty(row(&quot;Name&quot;).ToString.Trim)]" DisplayName="If empty row, skip warning" sap2010:WorkflowViewState.IdRef="If_5">
                           <If.Else>
-                            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Warn" Message="[&quot;Loading asset &quot; + row(&quot;Asset&quot;).ToString + &quot; failed: &quot; + exception.Message]" />
+                            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Warn" Message="[&quot;Loading asset &quot; + row(&quot;Asset&quot;).ToString + If(Settings.Keys.Contains(&quot;Environment&quot;), Settings(&quot;Environment&quot;).ToString, &quot;&quot;) + &quot; failed: &quot; + exception.Message]" />
                           </If.Else>
                         </If>
                       </ActivityAction>
@@ -207,24 +187,12 @@
         </Catch>
       </TryCatch.Catches>
     </TryCatch>
-    <sads:DebugSymbol.Symbol>dz1DOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xGcmFtZXdvcmtcSW5pdGlBbGxTZXR0aW5ncy54YW1sNgGYAQGxAQEDAWcBcwECTAPTAQ4CAQFNBU2eAQIBQU4FVQ4CAT1WBWwQAgEvbQWQARICARyRAQXRARACAQJNe02bAQIBQlNKU20CAUBQS1BVAgE+WwdbmwECATlcB2MQAgE0ZAdrEAIBMG2UAW2kAQIBLXMLjQEWAgEdkwEJxQEUAgEFzQENzQGhAQIBA1tZW2cCATxbIFsvAgE6YTJhcgIBN14zXj8CATVpMmmeAQIBM2YzZkwCATF3DXfIAQIBJngNjAEdAgEelwELlwG+AQIBFpgBC8QBGwIBBs0Be80BngECAQR3NndFAgErd6ABd6kBAgEpd7cBd8UBAgEneCZ4NQIBJH4TiQEYAgEflwE0lwE+AgEalwGXAZcBnwECARmXAa0BlwG7AQIBF5gBJJgBLgIBFJ4BEcEBHAIBB34hfl4CASCAAReHASACASGgARWxASACAQy5ARm9AR4CAQiFAUKFAVACASOCAUOCAWgCASKkAReoASoCARCpARewASACAQ25ASe5AWQCAQm7AR27AfkBAgEKpgFKpgFWAgESpAFIpAFrAgERrgFCrgFOAgEPqwFDqwFjAgEOuwGKAbsB9gECAQs=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0dDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQZXJmb3JtZXJcRnJhbWV3b3JrXEluaXRpQWxsU2V0dGluZ3MueGFtbC0BmAEBsQEBAwFnAXMBAk4DvwEOAgEBTwVPngECATRQBVcOAgEwWAV7EgIBHXwFvQEQAgECT3tPmwECATVVSlVtAgEzUktSVQIBMViUAVikAQIBLl4LeBYCAR5+CbEBFAIBBbkBDbkBoQECAQNiDWLaAQIBJ2MNdx0CAR+CAQuCAdABAgEXgwELsAEbAgEGuQF7uQGeAQIBBGJIYlcCASxisgFiuwECASpiyQFi1wECAShjJmM1AgElaRN0GAIBIIIBRoIBUAIBG4IBqQGCAbEBAgEaggG/AYIBzQECARiDASSDAS4CARWJARGtARwCAQdpIWleAgEhaxdyIAIBIosBFZ0BIAIBDKUBGakBHgIBCHBCcFACASRtQ21oAgEjjgFGjgG3AQIBDZABF5QBKgIBEZUBF5wBIAIBDqUBJ6UBZAIBCacBHacB6QICAQqSAUqSAVYCAROQAUiQAXcCARKaAUKaAU4CARCXAUOXAWMCAQ+nAYoBpwHmAgIBCw==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="LogMessage_4" sap:VirtualizedContainerService.HintSize="336,93" />
-      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="336,60" />
-      <sap2010:ViewStateData Id="ReadTextFile_1" sap:VirtualizedContainerService.HintSize="314,59" />
-      <sap2010:ViewStateData Id="Assign_24" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="336,411">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="LogMessage_4" sap:VirtualizedContainerService.HintSize="554,93" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="554,60" />
       <sap2010:ViewStateData Id="ReadRange_2" sap:VirtualizedContainerService.HintSize="494,87" />
       <sap2010:ViewStateData Id="Assign_15" sap:VirtualizedContainerService.HintSize="242,60" />
       <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,210" />
@@ -244,15 +212,15 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEach`1_3" sap:VirtualizedContainerService.HintSize="336,52">
+      <sap2010:ViewStateData Id="ForEach`1_3" sap:VirtualizedContainerService.HintSize="554,745">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ReadRange_3" sap:VirtualizedContainerService.HintSize="448,87" />
+      <sap2010:ViewStateData Id="ReadRange_3" sap:VirtualizedContainerService.HintSize="514,87" />
       <sap2010:ViewStateData Id="GetRobotAsset_4" sap:VirtualizedContainerService.HintSize="242,22" />
       <sap2010:ViewStateData Id="Assign_23" sap:VirtualizedContainerService.HintSize="242,60" />
       <sap2010:ViewStateData Id="Sequence_11" sap:VirtualizedContainerService.HintSize="264,246">
@@ -262,8 +230,8 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="314,91" />
-      <sap2010:ViewStateData Id="If_5" sap:VirtualizedContainerService.HintSize="464,241">
+      <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="314,93" />
+      <sap2010:ViewStateData Id="If_5" sap:VirtualizedContainerService.HintSize="464,243">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -271,16 +239,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Catch`1_3" sap:VirtualizedContainerService.HintSize="404,21">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_3" sap:VirtualizedContainerService.HintSize="418,477" />
-      <sap2010:ViewStateData Id="ForEachRow_3" sap:VirtualizedContainerService.HintSize="448,626">
+      <sap2010:ViewStateData Id="Catch`1_3" sap:VirtualizedContainerService.HintSize="470,313">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -288,7 +247,8 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="470,877">
+      <sap2010:ViewStateData Id="TryCatch_3" sap:VirtualizedContainerService.HintSize="484,479" />
+      <sap2010:ViewStateData Id="ForEachRow_3" sap:VirtualizedContainerService.HintSize="514,628">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -296,8 +256,16 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="314,91" />
-      <sap2010:ViewStateData Id="Catch`1_2" sap:VirtualizedContainerService.HintSize="474,21">
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="536,879">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="314,93" />
+      <sap2010:ViewStateData Id="Catch`1_2" sap:VirtualizedContainerService.HintSize="540,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -305,15 +273,15 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="336,52">
+      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="554,1111">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="358,996">
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="576,2281">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -321,7 +289,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="GetAllSettings_1" sap:VirtualizedContainerService.HintSize="398,1076" />
+      <sap2010:ViewStateData Id="GetAllSettings_1" sap:VirtualizedContainerService.HintSize="616,2801" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

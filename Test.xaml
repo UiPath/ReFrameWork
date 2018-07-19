@@ -71,8 +71,14 @@
     <Sequence.Variables>
       <Variable x:TypeArguments="s:DateTime" Name="output" />
       <Variable x:TypeArguments="x:Boolean" Name="dateParse" />
-      <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" Default="[new dictionary(of String, Object)]" Name="dict" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" Name="config" />
     </Sequence.Variables>
+    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke InitiAllSettings workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Performer\Framework\InitiAllSettings.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="Settings">[config]</InOutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="ConfigFile">Performer/Config.xlsx</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
     <Parallel sap2010:WorkflowViewState.IdRef="Parallel_1">
       <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
         <ui:Click.CursorPosition>
@@ -89,23 +95,24 @@
           <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;wnd app='uirobot.exe' cls='#32770' title='Message box' /&gt;&lt;wnd ctrlid='2' title='OK' /&gt;" TimeoutMS="5000" WaitForReady="INTERACTIVE" />
         </ui:Click.Target>
       </ui:Click>
-      <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_2" Text="Hello World!" TopMost="True" />
+      <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_2" Text="[config(&quot;Message&quot;).ToString]" TopMost="True" />
     </Parallel>
-    <sads:DebugSymbol.Symbol>dydDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xUZXN0LnhhbWwJAUoBXgECRgNfDgIBAUpOSnMCAQJMBV0QAgEDTQdbEgIBBlwHXLwBAgEEWUxZsQECAQhZvAFZwgECAQdcnAFcqgECAQU=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dydDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xUZXN0LnhhbWwMAUoBXgECRgNlDgIBAUwFUR0CAQlSBWMQAgECTl5OZgIBDE9DT1gCAQtMvQFM6AECAQpTB2ESAgEGYgdi1gECAQNfTF+xAQIBCF+8AV/CAQIBB2KcAWLEAQIBBA==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="782,87" />
       <sap2010:ViewStateData Id="Click_1" sap:VirtualizedContainerService.HintSize="314,68" />
       <sap2010:ViewStateData Id="MessageBox_2" sap:VirtualizedContainerService.HintSize="314,68" />
       <sap2010:ViewStateData Id="Parallel_1" sap:VirtualizedContainerService.HintSize="782,114" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="804,238">
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="804,365">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Test_1" sap:VirtualizedContainerService.HintSize="844,318" />
+      <sap2010:ViewStateData Id="Test_1" sap:VirtualizedContainerService.HintSize="844,845" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
