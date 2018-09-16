@@ -82,7 +82,7 @@
         </ui:InvokeWorkflowFile>
       </If.Else>
     </If>
-    <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel application scope" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" WorkbookPath="[Config(&quot;InputFile&quot;).ToString]">
+    <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel application scope" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" Visible="False" WorkbookPath="[Config(&quot;InputFile&quot;).ToString]">
       <ui:ExcelApplicationScope.Body>
         <ActivityAction x:TypeArguments="ui:WorkbookApplication">
           <ActivityAction.Argument>
@@ -114,7 +114,7 @@
         </InvokeMethod>
       </If.Else>
     </If>
-    <sads:DebugSymbol.Symbol>d0FDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQZXJmb3JtZXJcU2V0VHJhbnNhY3Rpb25TdGF0dXMueGFtbCAB+AIBggMBBgHiAQHsAQEFAZQCAdkCAQQBYwHDAQEDAaoDAbQDAQJKA3YOAgEBSwVLwgECASFMBVQKAgEaVQVsIAIBCG0FdAoCAQJLeUu/AQIBIkwTTDMCARtOCVIhAgEdVaABVcoBAgEYWwtpFgIBCW0TbbMBAgEDbwlyGAIBBFBMUFQCAR9OxAFO6AECAR5fDWYWAgEUZw1ntQECAQ9oDWi2AQIBCnAycFACAQZxMnGQAQIBBWQ/ZHcCARdhQGFHAgEVZyVnPAIBE2eoAWeyAQIBEWeaAWeiAQIBEGglaDwCAQ5oqQFoswECAQxomwFoowECAQs=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0FDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQZXJmb3JtZXJcU2V0VHJhbnNhY3Rpb25TdGF0dXMueGFtbCAB+AIBggMBBgHiAQHsAQEFAZQCAdkCAQQBYwHDAQEDAaoDAbQDAQJKA3YOAgEBSwVLwgECASFMBVQKAgEaVQVsIAIBCG0FdAoCAQJLeUu/AQIBIkwTTDMCARtOCVIhAgEdVcYBVfABAgEYWwtpFgIBCW0TbbMBAgEDbwlyGAIBBFBMUFQCAR9OxAFO6AECAR5fDWYWAgEUZw1ntQECAQ9oDWi2AQIBCnAycFACAQZxMnGQAQIBBWQ/ZHcCARdhQGFHAgEVZyVnPAIBE2eoAWeyAQIBEWeaAWeiAQIBEGglaDwCAQ5oqQFoswECAQxomwFoowECAQs=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -149,7 +149,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SetRequestStatus_1" sap:VirtualizedContainerService.HintSize="526,1439" />
+      <sap2010:ViewStateData Id="SetRequestStatus_1" sap:VirtualizedContainerService.HintSize="526,1513" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

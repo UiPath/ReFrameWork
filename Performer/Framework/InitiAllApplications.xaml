@@ -71,7 +71,7 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Get all applications from Config file ready for processing&#xA;&#xA;Using Config(&quot;OpenApps&quot;)" DisplayName="Initialization sequence" sap2010:WorkflowViewState.IdRef="Sequence_9">
+  <Sequence sap2010:Annotation.AnnotationText="Get all applications ready for processing&#xA;Via Config(&quot;OpenApps&quot;)" DisplayName="Initialization sequence" sap2010:WorkflowViewState.IdRef="Sequence_9">
     <If Condition="[Config is Nothing]" DisplayName="If Config not, Load it" sap2010:WorkflowViewState.IdRef="If_3">
       <If.Then>
         <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke InitiAllSettings workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Framework\InitiAllSettings.xaml">
@@ -88,7 +88,7 @@
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:String" Name="openAppWorkflow" />
           </ActivityAction.Argument>
-          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke OpenApp workflows" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="[openAppWorkflow]">
+          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke OpenApp workflows" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="[Path.Combine(&quot;Applications\&quot;, openAppWorkflow)]">
             <ui:InvokeWorkflowFile.Arguments>
               <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="Config">[Config]</InArgument>
             </ui:InvokeWorkflowFile.Arguments>
@@ -97,7 +97,7 @@
       </ui:ForEach.Body>
     </ui:ForEach>
     <ui:LogMessage DisplayName="Log started message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="All applications ready" />
-    <sads:DebugSymbol.Symbol>d0tDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQZXJmb3JtZXJcRnJhbWV3b3JrXEluaXRpQWxsQXBwbGljYXRpb25zLnhhbWwQAV8BaQECSgNlDgIBAUsFUwoCAQ1UBVSbAQIBC1UFYhICAQRjBWOVAQIBAksTSygCAQ5NCVEhAgEQVHtUmAECAQxVigFVgAICAQpbC18jAgEFY3pjkgECAQNPYk9qAgESTcEBTeIBAgERXV9dZwIBCFu7AVvOAQIBBg==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0tDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQZXJmb3JtZXJcRnJhbWV3b3JrXEluaXRpQWxsQXBwbGljYXRpb25zLnhhbWwQAV8BaQECSgNlDgIBAUsFUwoCAQxUBVSbAQIBClUFYhICAQRjBWOVAQIBAksTSygCAQ1NCVEhAgEPVHtUmAECAQtVigFVgAICAQlbC18jAgEFY3pjkgECAQNPYk9qAgERTcEBTeIBAgEQXV9dZwIBB1u7AVv3AQIBBg==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -114,7 +114,7 @@
       <sap2010:ViewStateData Id="InvokeWorkflowFile_6" sap:VirtualizedContainerService.HintSize="314,87" />
       <sap2010:ViewStateData Id="ForEach`1_2" sap:VirtualizedContainerService.HintSize="330,222" />
       <sap2010:ViewStateData Id="LogMessage_2" sap:VirtualizedContainerService.HintSize="330,93" />
-      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="352,764">
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="352,748">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -122,7 +122,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Initialization_1" sap:VirtualizedContainerService.HintSize="392,844" />
+      <sap2010:ViewStateData Id="Initialization_1" sap:VirtualizedContainerService.HintSize="392,868" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

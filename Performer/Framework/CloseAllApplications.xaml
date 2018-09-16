@@ -65,14 +65,14 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Close applications used in the process&#xD;&#xA;&#xD;&#xA;Using Config(&quot;CloseApps&quot;)" DisplayName="Close All Apps" sap2010:WorkflowViewState.IdRef="Sequence_1">
-    <ui:ForEach x:TypeArguments="x:String" DisplayName="For each closing app workflow" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Config(&quot;CloseApps&quot;).ToString.Split({&quot;,&quot;, &quot; &quot;}, StringSplitOptions.RemoveEmptyEntries)]">
+  <Sequence sap2010:Annotation.AnnotationText="Close applications used in the process&#xA;Via Config(&quot;CloseApps&quot;)" DisplayName="Close All Apps" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <ui:ForEach x:TypeArguments="x:String" DisplayName="For each closing app workflow" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Config(&quot;CloseApps&quot;).ToString.Split({&quot;, &quot;.ToCharArray}, StringSplitOptions.RemoveEmptyEntries)]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:String">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:String" Name="closeAppWorkflow" />
           </ActivityAction.Argument>
-          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke CloseApp workflows" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="[closeAppWorkflow]">
+          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke CloseApp workflows" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="[Path.Combine(&quot;Applications\&quot;, closeAppWorkflow)]">
             <ui:InvokeWorkflowFile.Arguments>
               <scg:Dictionary x:TypeArguments="x:String, Argument" />
             </ui:InvokeWorkflowFile.Arguments>
@@ -80,13 +80,13 @@
         </ActivityAction>
       </ui:ForEach.Body>
     </ui:ForEach>
-    <sads:DebugSymbol.Symbol>d0FDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xGcmFtZXdvcmtcQ2xvc2VBbGxBcHBsaWNhdGlvbnMueGFtbAYBWwG8AQECRANUDgIBAUUFUhICAQJFjQFFhAICAQZLC08jAgEDS7wBS9ABAgEE</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0tDOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQZXJmb3JtZXJcRnJhbWV3b3JrXENsb3NlQWxsQXBwbGljYXRpb25zLnhhbWwGAVsBvAEBAkQDVA4CAQFFBVISAgECRY0BRYICAgEFSwtPIwIBA0u8AUv5AQIBBA==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="InvokeWorkflowFile_3" sap:VirtualizedContainerService.HintSize="314,87" />
       <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="330,222" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="352,406">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="352,390">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -94,7 +94,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="CloseAllApps_1" sap:VirtualizedContainerService.HintSize="392,486" />
+      <sap2010:ViewStateData Id="CloseAllApps_1" sap:VirtualizedContainerService.HintSize="392,510" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

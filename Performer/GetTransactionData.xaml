@@ -88,7 +88,7 @@
     </If>
     <If Condition="[Config.Keys.Contains(&quot;InputFile&quot;) AndAlso File.Exists(Config(&quot;InputFile&quot;).ToString)]" DisplayName="If existing input file" sap2010:WorkflowViewState.IdRef="If_6">
       <If.Then>
-        <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Get data from Excel file" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" WorkbookPath="[Config(&quot;InputFile&quot;).ToString]">
+        <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Get data from Excel file" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" Visible="False" WorkbookPath="[Config(&quot;InputFile&quot;).ToString]">
           <ui:ExcelApplicationScope.Body>
             <ActivityAction x:TypeArguments="ui:WorkbookApplication">
               <ActivityAction.Argument>
@@ -205,7 +205,7 @@
         </Sequence>
       </If.Else>
     </If>
-    <sads:DebugSymbol.Symbol>dz9DOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQZXJmb3JtZXJcR2V0VHJhbnNhY3Rpb25EYXRhLnhhbWw7AWcBggIBAksD0QEOAgEBUAVYCgIBRlkFjQEKAgEjjgEFzwEKAgECUBNQfgIBR1IJVhkCAUhZE1l+AgEkWwmLASQCASWOAROOASsCAQOQAQmXARICAR+aAQnNARQCAQRUYFRoAgFJW6UBW88BAgFEYQ+IARoCASaVAU6VAVcCASKSAU+SAWACASCbAQuiARQCARujAQuqARQCARerAQu7ARgCARK8AQvDARQCAQ7EAQvLARQCAQrMAQvMAa0CAgEFYhFipwECAUBjEWOpAQIBPGQRaiUCATdrEYcBIQIBJ6ABUKABcwIBHp0BUZ0BYgIBHKgBNqgBUgIBGqUBN6UBTgIBGKsBnAGrAbEBAgEWsQERuAEaAgETwQE2wQFMAgERvgE3vgFUAgEPyQE2yQFZAgENxgE3xgFUAgELzAF+zAGqAgIBBmIpYi0CAUNinAFipAECAUJijgFilgECAUFjKWMtAgE/Y50BY6YBAgE+Y48BY5cBAgE9ZEBkTQIBOmcXZ0YCATlkowFkqwECAThrKms3AgE1cReEASICASi2ATy2AUwCARWzAT2zAV4CARRzSHNxAgEpdRmDAR4CASp1J3VzAgErdx2BASgCAS54H38oAgEwgAEfgAFwAgEvfUx9UQIBM3pNelgCATE=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dz9DOlxDb2RlSHViXFVpUGF0aFxSZUZyYW1lV29ya1xQZXJmb3JtZXJcR2V0VHJhbnNhY3Rpb25EYXRhLnhhbWw7AWcBggIBAksD0QEOAgEBUAVYCgIBRlkFjQEKAgEjjgEFzwEKAgECUBNQfgIBR1IJVhkCAUhZE1l+AgEkWwmLASQCASWOAROOASsCAQOQAQmXARICAR+aAQnNARQCAQRUYFRoAgFJW8sBW/UBAgFEYQ+IARoCASaVAU6VAVcCASKSAU+SAWACASCbAQuiARQCARujAQuqARQCARerAQu7ARgCARK8AQvDARQCAQ7EAQvLARQCAQrMAQvMAa0CAgEFYhFipwECAUBjEWOpAQIBPGQRaiUCATdrEYcBIQIBJ6ABUKABcwIBHp0BUZ0BYgIBHKgBNqgBUgIBGqUBN6UBTgIBGKsBnAGrAbEBAgEWsQERuAEaAgETwQE2wQFMAgERvgE3vgFUAgEPyQE2yQFZAgENxgE3xgFUAgELzAF+zAGqAgIBBmIpYi0CAUNinAFipAECAUJijgFilgECAUFjKWMtAgE/Y50BY6YBAgE+Y48BY5cBAgE9ZEBkTQIBOmcXZ0YCATlkowFkqwECAThrKms3AgE1cReEASICASi2ATy2AUwCARWzAT2zAV4CARRzSHNxAgEpdRmDAR4CASp1J3VzAgErdx2BASgCAS54H38oAgEwgAEfgAFwAgEvfUx9UQIBM3pNelgCATE=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
