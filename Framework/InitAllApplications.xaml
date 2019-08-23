@@ -10,7 +10,7 @@
  xmlns:ui="http://schemas.uipath.com/workflow/activities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data. This structure can be used to store, for example, an URL for a system that needs to be initialized. &#xA;It is not recommended to use it to store credentials; instead, store them on Orchestrator and just pass the name of the credential asset as a setting in this dictionary. Then use the GetAppCredentials workflow to retrieve the credentials securely." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
@@ -65,14 +65,14 @@
       <AssemblyReference>TimeSpan2</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Description: Open and initialize application as needed.&#xA;&#xA;Pre Condition: N/A&#xA;Post Condtion: Applications opened" DisplayName="Initialization Sequence" sap2010:WorkflowViewState.IdRef="Sequence_9">
-    <ui:LogMessage DisplayName="Log App Initialization message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="Opening applications..." />
-    <sads:DebugSymbol.Symbol>d3ZDOlxVc2Vyc1xtaWhhaS5kdW5hcmVhbnVcR29vZ2xlIERyaXZlXFdvcmtzcGFjZVxVaVBhdGhcVGVtcGxhdGVzXFVpUGF0aF9SRUZyYW1ld29ya1xGcmFtZXdvcmtcSW5pdEFsbEFwcGxpY2F0aW9ucy54YW1sA0QDRw4CAQFFBUWhAQIBAkWFAUWeAQIBAw==</sads:DebugSymbol.Symbol>
+  <Sequence sap2010:Annotation.AnnotationText="Open applications used in the process and do necessary initialization procedures (e.g., login)." DisplayName="Initialize All Applications" sap2010:WorkflowViewState.IdRef="Sequence_9">
+    <ui:LogMessage DisplayName="Log message (Initialize applications)" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace" Message="Opening applications..." />
+    <sads:DebugSymbol.Symbol>d1RDOlxVc2Vyc1xNYXRldXMgQ3J1elxEb2N1bWVudHNcR2l0SHViXFJlRnJhbWVXb3JrXEZyYW1ld29ya1xJbml0QWxsQXBwbGljYXRpb25zLnhhbWwDRANHDgIBAUUFRakBAgECRY0BRaYBAgED</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="314.4,92.8" />
-      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="336.8,293.6">
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="336,257">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -80,7 +80,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Initialization_1" sap:VirtualizedContainerService.HintSize="376.8,413.6" />
+      <sap2010:ViewStateData Id="Initialization_1" sap:VirtualizedContainerService.HintSize="376,337" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

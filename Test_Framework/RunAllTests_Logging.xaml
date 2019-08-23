@@ -1,0 +1,202 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="RunAllTests_Logging"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="Overall counter for tests." Name="in_TestCounter" Type="InArgument(x:Int32)" />
+    <x:Property sap2010:Annotation.AnnotationText="Counter for tests that failed." Name="io_FailedTestsCounter" Type="InOutArgument(x:Int32)" />
+    <x:Property sap2010:Annotation.AnnotationText="Filepath to which logs about tests should be written." Name="in_TestLogFile" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Status of the test to be written to the report." Name="out_Status" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Counter for tests that succeeded." Name="io_PassedTestsCounter" Type="InOutArgument(x:Int32)" />
+    <x:Property sap2010:Annotation.AnnotationText="Expected outcome of the test. It can be &quot;Success&quot;, &quot;AppEx&quot; or &quot;BRE&quot;." Name="in_ExpectedOutcome" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Filename of the workflow that implements a test." Name="in_WorkflowFilename" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Exception thrown by tests and used for logging purposes." Name="in_Exception" Type="InArgument(s:Exception)" />
+    <x:Property sap2010:Annotation.AnnotationText="Actual outcome of the test. It can be &quot;Success&quot;, &quot;AppEx&quot; or &quot;BRE&quot;." Name="in_ActualOutcome" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Comment about the test to be written to the report." Name="out_Comments" Type="OutArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>RunAllTests_Logging_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Core</AssemblyReference>
+      <AssemblyReference>UiPath.Core.Activities</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Log the result of running the test, based on the type of test and its outcome." DisplayName="Run All Tests - Logging" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <If Condition="[in_ExpectedOutcome = in_ActualOutcome]" DisplayName="If" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <Sequence DisplayName="Test passed" sap2010:WorkflowViewState.IdRef="Sequence_1">
+          <Assign DisplayName="Assign io_PassedTestsCounter" sap2010:WorkflowViewState.IdRef="Assign_1">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Int32">[io_PassedTestsCounter]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Int32">[io_PassedTestsCounter+1]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:AppendLine DisplayName="Append line (Pass)" FileName="[in_TestLogFile]" sap2010:WorkflowViewState.IdRef="AppendLine_1" Text="[Now.ToString(&quot;hh:mm:ss tt&quot;)+vbTab+&quot;Test &quot;+in_TestCounter.ToString+&quot; PASS  ---&gt; &quot;+in_WorkflowFilename]" />
+          <Assign DisplayName="Assign (Test Pass status)" sap2010:WorkflowViewState.IdRef="Assign_2">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[out_Status]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">PASS</InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Test failed" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Assign DisplayName="Assign io_FailedTestsCounter" sap2010:WorkflowViewState.IdRef="Assign_3">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Int32">[io_FailedTestsCounter]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Int32">[io_FailedTestsCounter+1]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:AppendLine DisplayName="Append line (Fail)" FileName="[in_TestLogFile]" sap2010:WorkflowViewState.IdRef="AppendLine_2" Text="[Now.ToString(&quot;hh:mm:ss tt&quot;)+vbTab+&quot;Test &quot;+in_TestCounter.ToString+&quot; FAIL  ---&gt; &quot;+in_WorkflowFilename+&quot; ---&gt; &quot;+in_ExpectedOutcome.ToString]" />
+          <Assign DisplayName="Assign (Test Fail status)" sap2010:WorkflowViewState.IdRef="Assign_4">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[out_Status]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">FAIL</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Switch x:TypeArguments="x:String" DisplayName="Switch to choose test comment" Expression="[in_ExpectedOutcome]" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+            <Assign x:Key="BRE" DisplayName="Assign out_Comment (BRE)" sap2010:WorkflowViewState.IdRef="Assign_5">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[out_Comments]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">["BRE: "+in_Exception.Message+" at Source: "+in_Exception.Source]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign x:Key="AppEx" DisplayName="Assign out_Comment (AppEx)" sap2010:WorkflowViewState.IdRef="Assign_6">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[out_Comments]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">["AppEx: "+in_Exception.Message+" at Source: "+in_Exception.Source]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign x:Key="Success" DisplayName="Assign out_Comment (Success)" sap2010:WorkflowViewState.IdRef="Assign_7">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[out_Comments]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">No exception thrown.</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Switch>
+        </Sequence>
+      </If.Else>
+    </If>
+    <sads:DebugSymbol.Symbol>d1lDOlxVc2Vyc1xNYXRldXMgQ3J1elxEb2N1bWVudHNcR2l0SHViXFJlRnJhbWVXb3JrXFRlc3RfRnJhbWV3b3JrXFJ1bkFsbFRlc3RzX0xvZ2dpbmcueGFtbCJNA5UBDgIBAU4FkwEKAgECThNOPAIBA1AJYhQCASdlCZEBFAIBBlELWBQCATBZC1mXAgIBLFoLYRQCAShmC20UAgEibgtuyQICAR5vC3YUAgEadwuQARQCAQdWNVZOAgEzUzZTTQIBMVmLAVmUAgIBL1lEWVYCAS1fNl86AgErXDdcQwIBKWs1a04CASVoNmhNAgEjbosBbsYCAgEhbkRuVgIBH3Q2dDoCAR1xN3FDAgEbd2V3ewIBCHgNfxYCARSAAQ2HARYCAQ6IAQ2PARYCAQp9OH15AgEXejl6RwIBFYUBOIUBewIBEYIBOYIBRwIBD40BOI0BTAIBDYoBOYoBRwIBCw==</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="AppendLine_1" sap:VirtualizedContainerService.HintSize="314,86.6666666666667" />
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="314,62" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="336,413">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="AppendLine_2" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="314,62" />
+      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="Switch`1_1" sap:VirtualizedContainerService.HintSize="314,52.6666666666667">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="336,506">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="697,654">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="719,805">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="RunAllTests_Logging_1" sap:VirtualizedContainerService.HintSize="759,925" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
