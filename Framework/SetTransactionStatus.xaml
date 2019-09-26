@@ -17,7 +17,7 @@
     <x:Property sap2010:Annotation.AnnotationText="Exception variable that is used during transitions between states." Name="in_SystemError" Type="InArgument(s:Exception)" />
     <x:Property sap2010:Annotation.AnnotationText="Exception variable that is used during transitions between states." Name="in_BusinessRuleException" Type="InArgument(ui:BusinessRuleException)" />
     <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
-    <x:Property sap2010:Annotation.AnnotationText="This variable controls the number of attemps of retrying the process in case of System Error." Name="io_RetryNumber" Type="InOutArgument(x:Int32)" />
+    <x:Property sap2010:Annotation.AnnotationText="This variable controls the number of attempts of retrying the process in case of System Error." Name="io_RetryNumber" Type="InOutArgument(x:Int32)" />
     <x:Property sap2010:Annotation.AnnotationText="Sequential counter of transaction items." Name="io_TransactionNumber" Type="InOutArgument(x:Int32)" />
     <x:Property sap2010:Annotation.AnnotationText="Allow the optional addition of information about the transaction item." Name="in_TransactionField1" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Allow the optional addition of information about the transaction item." Name="in_TransactionField2" Type="InArgument(x:String)" />
@@ -83,7 +83,7 @@
             <Sequence sap2010:Annotation.AnnotationText="If the transaction item is processed without any exceptions, its status is updated as Successful.&#xA;" DisplayName="Success" sap2010:WorkflowViewState.IdRef="Sequence_6">
               <If Condition="[in_TransactionItem isNot Nothing AndAlso (in_TransactionItem.GetType is GetType(Uipath.Core.QueueItem))]" DisplayName="If TransactionItem is a QueueItem (Success)" sap2010:WorkflowViewState.IdRef="If_2">
                 <If.Then>
-                  <ui:SetTransactionStatus ContinueOnError="{x:Null}" Reason="{x:Null}" ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set transaction status (Successful)" ErrorType="Application" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_1" Status="Successful" TransactionItem="[in_TransactionItem]">
+                  <ui:SetTransactionStatus ContinueOnError="{x:Null}" Reason="{x:Null}" ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set transaction status (Successful)" ErrorType="Application" Status="Successful" TransactionItem="[in_TransactionItem]">
                     <ui:SetTransactionStatus.Output>
                       <scg:Dictionary x:TypeArguments="x:String, InArgument" />
                     </ui:SetTransactionStatus.Output>
@@ -417,11 +417,10 @@
     <x:Reference>__ReferenceID15</x:Reference>
     <x:Reference>__ReferenceID16</x:Reference>
     <x:Reference>__ReferenceID0</x:Reference>
-    <sads:DebugSymbol.Symbol>d1VDOlxVc2Vyc1xNYXRldXMgQ3J1elxEb2N1bWVudHNcR2l0SHViXFJlRnJhbWVXb3JrXEZyYW1ld29ya1xTZXRUcmFuc2FjdGlvblN0YXR1cy54YW1segF3AYEBAQJOA6UDDwIBAVA4UH0DAa4BjgE8jgFmAwGtAboBEZcDHAIBQJEBEbIBHAIBJncRiAEcAgEcUw10GAIBAr4BE+IBGAMBmQHjARPrASUDAY8B7AETzwIfAgFf0AIT2gIoAgFZ2wIT7gIeAgFQ7wITlgMeAgFBkgETmgEYAgE6mwETsQEeAgEneBN/HAIBIYABE4cBHAIBHVQPXBQCARddD3MaAgEDvgEhvgGMAQMBmgHAARfWASIDAZ8B2QEX4AEgAwGbAegBXegBcwMBlwHpAV3pAXMDAZUB5gFd5gF8AwGTAecBWecBawMBkQHlAV3lAXEDAZAB7gFH7gF7AwGNAbMCHbMCowIDAYgBtgIhvQIqAwGDAfABS/ABjQEDAYABkAIhkALfAgIBepICU5ICYQIBeKECKagCMgIBc5UCKZwCMgIBbvMBIfMB3wICAWn2ASX9AS4CAWWAAimHAjICAWDTAkDTAlYCAV7UAkDUAlYCAV3VAkDVAlICAVzWAkDWAlYCAVvXAkDXAlYCAVrdAhfiAi8CAVXqAhvqApICAgFR8QIX9QIvAgFO/QIbkgMmAgFCkgEhkgGMAQIBO5QBF5gBMQIBPJwBFaQBJwIBMKUBFaUBhgICAS6mARWwASoCASh9PX1VAgEkej56VAIBIoUBPYUBPgIBIIIBPoIBTgIBHlQdVIgBAgEYVhNaLQIBGV4RZiMCAQ1nEWfFAQIBCmgRciYCAQTBARnIASIDAakByQEZzQEzAwGkAc4BGdUBIgMBoAHeAUPeAUgDAZ4B2wFE2wFQAwGcAbMClwGzAqACAwGJAbsCS7sCYwMBhgG4Aky4AmIDAYQBkAKXAZAC3AICAXumAlOmAmUCAXajAlSjAmQCAXSaAlOaAmsCAXGXAlSXAmoCAW/zAaYB8wHcAgIBavsBT/sBUAIBaPgBUPgBYAIBZoUCU4UCawIBY4ICVIICagIBYd8CVN8CgwECAVfdAr4B3QLdAQIBVuoCoAHqAo8CAgFS8QLFAfEC6gECAU/+Ah3+ApUCAgFK/wIdkQMoAgFDlAGWApQBugICAT+UAdsClAHxAgIBPaEBX6EBdQIBOKIBX6IBdQIBNp8BX58BfgIBNKABW6ABbQIBMp4BX54BcAIBMaUBnAGlAYMCAgEvqQFCqQFYAgEtqgFCqgFYAgEsqwFCqwFUAgErrAFCrAFYAgEqrQFCrQFYAgEpVrMCVskCAgEaY1tjcQIBFWRbZHECARNhW2F6AgERYldiaQIBD2BbYGICAQ5njAFnwgECAQtrPmtUAgEJbD5sVAIBCG0+bVACAQduPm5UAgEGbz5vVAIBBcYBRcYBSQMBrAHDAUbDAVIDAaoByQGLAskBpQIDAacByQHGAskB3AIDAaUB0wFD0wFfAwGjAdABRNABVAMBoQH+AqkB/gKSAgIBS4EDIYUDOQIBSI0DJY0DlQICAUSBA8sBgQPsAQIBSY0DrQGNA5ICAgFF</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d1VDOlxVc2Vyc1xNYXRldXMgQ3J1elxEb2N1bWVudHNcR2l0SHViXFJlRnJhbWVXb3JrXEZyYW1ld29ya1xTZXRUcmFuc2FjdGlvblN0YXR1cy54YW1segF3AYEBAQJOA6UDDwIBAVA4UH0DAa4BjgE8jgFmAwGtAboBEZcDHAIBQJEBEbIBHAIBJncRiAEcAgEcUw10GAIBAr4BE+IBGAMBmQHjARPrASUDAY8B7AETzwIfAgFf0AIT2gIoAgFZ2wIT7gIeAgFQ7wITlgMeAgFBkgETmgEYAgE6mwETsQEeAgEneBN/HAIBIYABE4cBHAIBHVQPXBQCARddD3MaAgEDvgEhvgGMAQMBmgHAARfWASIDAZ8B2QEX4AEgAwGbAegBXegBcwMBlwHpAV3pAXMDAZUB5gFd5gF8AwGTAecBWecBawMBkQHlAV3lAXEDAZAB7gFH7gF7AwGNAbMCHbMCowIDAYgBtgIhvQIqAwGDAfABS/ABjQEDAYABkAIhkALfAgIBepICU5ICYQIBeKECKagCMgIBc5UCKZwCMgIBbvMBIfMB3wICAWn2ASX9AS4CAWWAAimHAjICAWDTAkDTAlYCAV7UAkDUAlYCAV3VAkDVAlICAVzWAkDWAlYCAVvXAkDXAlYCAVrdAhfiAi8CAVXqAhvqApICAgFR8QIX9QIvAgFO/QIbkgMmAgFCkgEhkgGMAQIBO5QBF5gBMQIBPJwBFaQBJwIBMKUBFaUBhgICAS6mARWwASoCASh9PX1VAgEkej56VAIBIoUBPYUBPgIBIIIBPoIBTgIBHlQdVIgBAgEYVhNaLQIBGV4RZiMCAQ1nEWfFAQIBCmgRciYCAQTBARnIASIDAakByQEZzQEzAwGkAc4BGdUBIgMBoAHeAUPeAUgDAZ4B2wFE2wFQAwGcAbMClwGzAqACAwGJAbsCS7sCYwMBhgG4Aky4AmIDAYQBkAKXAZAC3AICAXumAlOmAmUCAXajAlSjAmQCAXSaAlOaAmsCAXGXAlSXAmoCAW/zAaYB8wHcAgIBavsBT/sBUAIBaPgBUPgBYAIBZoUCU4UCawIBY4ICVIICagIBYd8CVN8CgwECAVfdAr4B3QLdAQIBVuoCoAHqAo8CAgFS8QLFAfEC6gECAU/+Ah3+ApUCAgFK/wIdkQMoAgFDlAGWApQBugICAT+UAdsClAHxAgIBPaEBX6EBdQIBOKIBX6IBdQIBNp8BX58BfgIBNKABW6ABbQIBMp4BX54BcAIBMaUBnAGlAYMCAgEvqQFCqQFYAgEtqgFCqgFYAgEsqwFCqwFUAgErrAFCrAFYAgEqrQFCrQFYAgEpVvoBVpACAgEaY1tjcQIBFWRbZHECARNhW2F6AgERYldiaQIBD2BbYGICAQ5njAFnwgECAQtrPmtUAgEJbD5sVAIBCG0+bVACAQduPm5UAgEGbz5vVAIBBcYBRcYBSQMBrAHDAUbDAVIDAaoByQGLAskBpQIDAacByQHGAskB3AIDAaUB0wFD0wFfAwGjAdABRNABVAMBoQH+AqkB/gKSAgIBS4EDIYUDOQIBSI0DJY0DlQICAUSBA8sBgQPsAQIBSY0DrQGNA5ICAgFF</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="SetTransactionStatus_1" sap:VirtualizedContainerService.HintSize="694,1210" />
       <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="464,208" />
       <sap2010:ViewStateData Id="AddLogFields_4" sap:VirtualizedContainerService.HintSize="314,22" />
       <sap2010:ViewStateData Id="LogMessage_15" sap:VirtualizedContainerService.HintSize="314,91" />
@@ -780,6 +779,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="SetTransactionStatus_1" sap:VirtualizedContainerService.HintSize="694,1210" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
