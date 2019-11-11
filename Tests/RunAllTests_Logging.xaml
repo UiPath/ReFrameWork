@@ -75,7 +75,7 @@
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="Log the result of running the test, based on the type of test and its outcome." DisplayName="Run All Tests - Logging" sap2010:WorkflowViewState.IdRef="Sequence_3">
-    <If Condition="[in_ExpectedOutcome = in_ActualOutcome]" DisplayName="If" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[in_ExpectedOutcome = in_ActualOutcome]" DisplayName="If outcome was like expected" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <Sequence DisplayName="Test passed" sap2010:WorkflowViewState.IdRef="Sequence_1">
           <Assign DisplayName="Assign io_PassedTestsCounter" sap2010:WorkflowViewState.IdRef="Assign_1">
@@ -145,12 +145,12 @@
         </Sequence>
       </If.Else>
     </If>
-    <sads:DebugSymbol.Symbol>d1lDOlxVc2Vyc1xNYXRldXMgQ3J1elxEb2N1bWVudHNcR2l0SHViXFJlRnJhbWVXb3JrXFRlc3RfRnJhbWV3b3JrXFJ1bkFsbFRlc3RzX0xvZ2dpbmcueGFtbCJNA5UBDgIBAU4FkwEKAgECThNOPAIBA1AJYhQCASdlCZEBFAIBBlELWBQCATBZC1mXAgIBLFoLYRQCAShmC20UAgEibgtuyQICAR5vC3YUAgEadwuQARQCAQdWNVZOAgEzUzZTTQIBMVmLAVmUAgIBL1lEWVYCAS1fNl86AgErXDdcQwIBKWs1a04CASVoNmhNAgEjbosBbsYCAgEhbkRuVgIBH3Q2dDoCAR1xN3FDAgEbd2V3ewIBCHgNfxYCARSAAQ2HARYCAQ6IAQ2PARYCAQp9OH15AgEXejl6RwIBFYUBOIUBewIBEYIBOYIBRwIBD40BOI0BTAIBDYoBOYoBRwIBCw==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d1BDOlxVc2Vyc1xNYXRldXMgQ3J1elxEb2N1bWVudHNcR2l0SHViXFJlRnJhbWVXb3JrXFRlc3RzXFJ1bkFsbFRlc3RzX0xvZ2dpbmcueGFtbCJNA5UBDgIBAU4FkwEKAgECThNOPAIBA1AJYhQCASdlCZEBFAIBBlELWBQCATBZC1mXAgIBLFoLYRQCAShmC20UAgEibgtuyQICAR5vC3YUAgEadwuQARQCAQdWNVZOAgEzUzZTTQIBMVmLAVmUAgIBL1lEWVYCAS1fNl86AgErXDdcQwIBKWs1a04CASVoNmhNAgEjbosBbsYCAgEhbkRuVgIBH3Q2dDoCAR1xN3FDAgEbd2V3ewIBCHgNfxYCARSAAQ2HARYCAQ6IAQ2PARYCAQp9OH15AgEXejl6RwIBFYUBOIUBewIBEYIBOYIBRwIBD40BOI0BTAIBDYoBOYoBRwIBCw==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="AppendLine_1" sap:VirtualizedContainerService.HintSize="314,86.6666666666667" />
+      <sap2010:ViewStateData Id="AppendLine_1" sap:VirtualizedContainerService.HintSize="314,87" />
       <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="314,62" />
       <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="336,413">
         <sap:WorkflowViewStateService.ViewState>
