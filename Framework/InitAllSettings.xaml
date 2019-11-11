@@ -137,11 +137,11 @@
                   <TryCatch.Try>
                     <Sequence DisplayName="Get asset from Orchestrator" sap2010:WorkflowViewState.IdRef="Sequence_11">
                       <Sequence.Variables>
-                        <Variable x:TypeArguments="ui:GenericValue" Name="assetValue" />
+                        <Variable x:TypeArguments="ui:GenericValue" Name="AssetValue" />
                       </Sequence.Variables>
                       <ui:GetRobotAsset TimeoutMS="{x:Null}" AssetName="[row(&quot;Asset&quot;).ToString]" DisplayName="Get Asset" sap2010:WorkflowViewState.IdRef="GetRobotAsset_4">
                         <ui:GetRobotAsset.Value>
-                          <OutArgument x:TypeArguments="ui:GenericValue">[assetValue]</OutArgument>
+                          <OutArgument x:TypeArguments="ui:GenericValue">[AssetValue]</OutArgument>
                         </ui:GetRobotAsset.Value>
                       </ui:GetRobotAsset>
                       <Assign DisplayName="Assign asset value in Config" sap2010:WorkflowViewState.IdRef="Assign_23">
@@ -230,7 +230,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="LogMessage_4" sap:VirtualizedContainerService.HintSize="314,91" />
-      <sap2010:ViewStateData Id="If_5" sap:VirtualizedContainerService.HintSize="464,281">
+      <sap2010:ViewStateData Id="If_5" sap:VirtualizedContainerService.HintSize="464,266">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -247,7 +247,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_3" sap:VirtualizedContainerService.HintSize="200,51">
+      <sap2010:ViewStateData Id="TryCatch_3" sap:VirtualizedContainerService.HintSize="418,473">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -281,7 +281,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="418,728">
+      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="532,728">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
