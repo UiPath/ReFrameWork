@@ -14,7 +14,7 @@
     <x:Property sap2010:Annotation.AnnotationText="Overall counter for tests." Name="in_TestCounter" Type="InArgument(x:Int32)" />
     <x:Property sap2010:Annotation.AnnotationText="Counter for tests that failed." Name="io_FailedTestsCounter" Type="InOutArgument(x:Int32)" />
     <x:Property sap2010:Annotation.AnnotationText="Filepath to which logs about tests should be written." Name="in_TestLogFile" Type="InArgument(x:String)" />
-    <x:Property sap2010:Annotation.AnnotationText="Status of the test to be written to the report." Name="out_Status" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Status of the test to be written to the report." Name="out_Status" Type="OutArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Counter for tests that succeeded." Name="io_PassedTestsCounter" Type="InOutArgument(x:Int32)" />
     <x:Property sap2010:Annotation.AnnotationText="Expected outcome of the test. It can be &quot;Success&quot;, &quot;AppEx&quot; or &quot;BRE&quot;." Name="in_ExpectedOutcome" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Filename of the workflow that implements a test." Name="in_WorkflowFilename" Type="InArgument(x:String)" />
@@ -75,7 +75,7 @@
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="Log the result of running the test, based on the type of test and its outcome." DisplayName="Run All Tests - Logging" sap2010:WorkflowViewState.IdRef="Sequence_3">
-    <If Condition="[in_ExpectedOutcome = in_ActualOutcome]" DisplayName="If outcome was like expected" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[in_ExpectedOutcome = in_ActualOutcome]" DisplayName="If outcome is the expected one" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <Sequence DisplayName="Test passed" sap2010:WorkflowViewState.IdRef="Sequence_1">
           <Assign DisplayName="Assign io_PassedTestsCounter" sap2010:WorkflowViewState.IdRef="Assign_1">
@@ -196,7 +196,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="RunAllTests_Logging_1" sap:VirtualizedContainerService.HintSize="759,925" />
+      <sap2010:ViewStateData Id="RunAllTests_Logging_1" sap:VirtualizedContainerService.HintSize="759,885" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
