@@ -18,7 +18,7 @@
 
 1. **INITIALIZE PROCESS**
  + ./Framework/*InitiAllSettings* - Load configuration data from Config.xlsx file and from assets
- + ./Framework/*GetAppCredentials* - Retrieve credentials from Orchestrator assets or local Windows Credential Manager
+ + ./Framework/*GetAppCredential* - Retrieve credentials from Orchestrator assets or local Windows Credential Manager
  + ./Framework/*InitiAllApplications* - Open and login to applications used throughout the process
 
 2. **GET TRANSACTION DATA**
