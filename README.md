@@ -1,50 +1,40 @@
 ### Documentation is included in the Documentation folder ###
 
-[ReFrameWork Documentation](https://github.com/UiPath/ReFrameWork/blob/master/Documentation/REFramework%20documentation.pdf)
+[REFrameWork Documentation](https://github.com/UiPath/ReFrameWork/blob/master/Documentation/REFramework%20documentation.pdf)
 
-### ReFrameWork Template ###
+### REFrameWork Template ###
 **Robotic Enterprise Framework**
 
-* built on top of *Transactional Business Process* template
-* using *State Machine* layout for the phases of automation project
-* offering high level exception handling and application recovery
-* keeps external settings in *Config.xlsx* file and Orchestrator assets
-* pulls credentials from *Credential Manager* and Orchestrator assets
-* gets transaction data from Orchestrator queue and updates back status
-* takes screenshots in case of application exceptions
-* provides extra utility workflows like sending a templated email
-* runs sample Notepad application with dummy Excel input data
-* 
+* Built on top of *Transactional Business Process* template
+* Uses *State Machine* layout for the phases of automation project
+* Offers high level logging, exception handling and recovery
+* Keeps external settings in *Config.xlsx* file and Orchestrator assets
+* Pulls credentials from Orchestrator assets and *Windows Credential Manager*
+* Gets transaction data from Orchestrator queue and updates back status
+* Takes screenshots in case of system exceptions
 
 
 ### How It Works ###
 
 1. **INITIALIZE PROCESS**
- + *InitiAllSettings* - Load config data from file and from assets
- + *InitiAllApplications* - Login to applications as per Config("OpenApps") field
-   + *GetAppCredentials* - From Orchestrator assets or local Credential Manager
- + If failing, retry a few times as per Config("ProcessRetries")
+ + ./Framework/*InitiAllSettings* - Load configuration data from Config.xlsx file and from assets
+ + ./Framework/*GetAppCredentials* - Retrieve credentials from Orchestrator assets or local Windows Credential Manager
+ + ./Framework/*InitiAllApplications* - Open and login to applications used throughout the process
 
 2. **GET TRANSACTION DATA**
-   + ./Framework/*GetTransactionData* - Fetches from Orchestrator queue as per Config("TransactionQueue")
-   + ./*GetTransactionData* - Sample for working with Excel input files
+ + ./Framework/*GetTransactionData* - Fetches transactions from an Orchestrator queue defined by Config("OrchestratorQueueName") or any other configured data source
 
 3. **PROCESS TRANSACTION**
- + Try *ProcessTransaction*
- + If application exceptions happen
-   + *SaveErrorScreen* - In Config("ErrorsFolder") with the exception message
-   + Going to re/INITIALIZE
- + *SetTransactionStatus* - As Success, Failed or Rejected with reason
-   + ./Framework/*SetTransactionStatus* - Updates the Orchestrator queue item
-   + ./*SetTransactionStatus* - Sample for updating Excel input file
+ + *Process* - Process trasaction and invoke other workflows related to the process being automated 
+ + ./Framework/*SetTransactionStatus* - Updates the status of the processed transaction (Orchestrator transactions by default): Success, Business Rule Exception or System Exception
 
 4. **END PROCESS**
- + *CloseAllApplications* - As listed in Config("CloseApps")
+ + ./Framework/*CloseAllApplications* - Logs out and closes applications used throughout the process
 
 
 ### For New Project ###
 
-1. Check out the Config.xlsx file and add/customize any required fields and values
-2. Implement OpenApp and CloseApp workflows, linking them in the Config.xlsx fields
-3. Implement GetTransactionData and SetTransactionStatus or use ./Framework versions for Orchestrator queues
-4. Implement ProcessTransaction workflow and any invoked others
+1. Check the Config.xlsx file and add/customize any required fields and values
+2. Implement InitiAllApplications.xaml and CloseAllApplicatoins.xaml workflows, linking them in the Config.xlsx fields
+3. Implement GetTransactionData.xaml and SetTransactionStatus.xaml according to the transaction type being used (Orchestrator queues by default)
+4. Implement Process.xaml workflow and invoke other workflows related to the process being automated
