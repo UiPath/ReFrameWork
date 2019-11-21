@@ -1,7 +1,8 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="TestWorkflowTemplate" mva:VisualBasic.Settings="{x:Null}"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="TestWorkflowTemplate" mva:VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="TestWorkflowTemplate_1"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
@@ -53,23 +54,22 @@
       <AssemblyReference>PresentationCore</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Template workflow used to create tests for workflows in the process.&#xA;Create a new test workflow by copying and renaming this file." DisplayName="Test">
+  <Sequence sap2010:Annotation.AnnotationText="Template workflow used to create tests for workflows in the process.&#xA;Create a new test workflow by copying and renaming this file." DisplayName="Test" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data." Name="Config" />
     </Sequence.Variables>
-    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Initialize All Settings" UnSafe="False" WorkflowFileName="Framework\InitAllSettings.xaml">
+    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke InitAllSettings workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\InitAllSettings.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="Config">[Config]</OutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
+        <InArgument x:TypeArguments="s:String[]" x:Key="in_ConfigSheets">[{"Settings", "Constants"}]</InArgument>
+        <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="out_Config">[Config]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
-      <sap2010:WorkflowViewState.IdRef>InvokeWorkflowFile_1</sap2010:WorkflowViewState.IdRef>
     </ui:InvokeWorkflowFile>
-    <sap2010:WorkflowViewState.IdRef>Sequence_1</sap2010:WorkflowViewState.IdRef>
-    <sads:DebugSymbol.Symbol>d0tDOlxVc2Vyc1xNYXRldXMgQ3J1elxEb2N1bWVudHNcR2l0SHViXFJlRnJhbWVXb3JrXFRlc3RXb3JrZmxvd1RlbXBsYXRlLnhhbWwEOANEDgIBATwFQR0CAQI+Wj5iAgEEPH08nQECAQM=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d1FDOlxVc2Vyc1xNYXRldXMgQ3J1elxEb2N1bWVudHNcR2l0SHViXFJlRnJhbWVXb3JrXFRlc3RzXFRlc3RXb3JrZmxvd1RlbXBsYXRlLnhhbWwGOQNFDgIBAT0FQx0CAQJBXkFmAgEGPbwBPdwBAgEFQEpAZQIBBD9GP1YCAQM=</sads:DebugSymbol.Symbol>
   </Sequence>
-  <sap2010:WorkflowViewState.IdRef>TestWorkflowTemplate_1</sap2010:WorkflowViewState.IdRef>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_2" sap:VirtualizedContainerService.HintSize="314,87" />
       <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="336,283">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -78,7 +78,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TestWorkflowTemplate_1" sap:VirtualizedContainerService.HintSize="376,403" />
+      <sap2010:ViewStateData Id="TestWorkflowTemplate_1" sap:VirtualizedContainerService.HintSize="376,363" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

@@ -70,13 +70,6 @@
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="Run all tests defined in _Tests.xlsx and log their results.&#xA;All tests are invoked in the same order they are defined in the Excel file, and this can affect their output." DisplayName="Run All Tests" sap2010:WorkflowViewState.IdRef="Sequence_2">
-    <Sequence.Variables>
-      <Variable x:TypeArguments="sd:DataTable" Name="dt_Tests" />
-      <Variable x:TypeArguments="x:Int32" Default="0" Name="TestCounter" />
-      <Variable x:TypeArguments="x:Int32" Default="0" Name="FailedTestsCounter" />
-      <Variable x:TypeArguments="x:Int32" Default="0" Name="PassedTestsCounter" />
-      <Variable x:TypeArguments="s:DateTime" Default="[now]" Name="StartTime" />
-    </Sequence.Variables>
     <If Condition="[Not File.Exists(in_TestLogFile)]" DisplayName="If log file does not exist, create it" sap2010:WorkflowViewState.IdRef="If_4">
       <If.Then>
         <ui:CreateFile Name="{x:Null}" ContinueOnError="True" DisplayName="Create Log file" sap2010:WorkflowViewState.IdRef="CreateFile_1" Path="[in_TestLogFile]" />
@@ -233,7 +226,7 @@
         </ActivityAction>
       </ui:ExcelApplicationScope.Body>
     </ui:ExcelApplicationScope>
-    <sads:DebugSymbol.Symbol>d1FDOlxVc2Vyc1xNYXRldXMgQ3J1elxEb2N1bWVudHNcR2l0SHViXFJlRnJhbWVXb3JrXFRlc3RfRnJhbWV3b3JrXFJ1bkFsbFRlc3RzLnhhbWxqAWEBcwECSAPtAQ4CAQFLM0s2AgEFTDNMNgIBBE0zTTYCAQNONk49AgECUAVUCgMBhwFVBesBIAIBBlATUDYDAYgBUglSpgEDAYkBVaABVbMBAwGGAVsL6AEWAgEHUjhSPgMBjAFSkQFSowEDAYoBYDtgPgIBC2E7YT4CAQpiPmJFAgEJYztjPgIBCGUNayEDAYEBbA1s7QECAX1tDW2oAgIBeW4Nbs4BAgF1bw1vqQICAXFwDXCtAgIBbXEN2wEdAgEg3AEN3AHMAQIBG90BDd0BugECARfeAQ3eAZcDAgET3wEN5wEiAgEMZTxlRQMBhAFoE2hCAwGDAWWsAWWzAQMBggFslQFs6gEDAYABbE1sXwIBfm2dAW2lAgIBfG1VbWcCAXpumAFuywECAXhuUG5iAgF2b5gBb6ABAgF0b6sBb7QBAgFycJgBcKIBAgFwcK0BcLYBAgFucSZxLwIBa3cT2AEeAgEh3AHFAdwByQECAR/cAT3cAUYCAR3cAa8B3AG3AQIBHN0BlQHdAbcBAgEa3QFN3QFfAgEY3gGRAd4BlAMCARbeAUneAVsCARTfAeYC3wGzAwIBEt8BvgPfAcQDAgER3wHOAd8B1AECARDfAasB3wG9AQIBDt8BhwLfAagCAgENeReWASICAVDFARfWASICAUeeARurATMCATSzARvAATMCASJ6GYEBIgIBZoIBGYIBywECAWODARmHATECAWGIARmVATECAVHGARnNASICAUzOARnVASICAUimAWKmAYABAgFGowFdowFtAgFEqQFcqQFqAgFCoAFmoAF6AgFApAFapAFmAgE+ogFmogF6AgE8pQFhpQF8AgE7qAFfqAFkAgE6pwFepwFpAgE4oQFcoQFpAgE2ngHeAZ4B/gECATW7AWK7AYABAgEzuAFduAFtAgExvgFcvgFqAgEvtQFmtQF6AgEtuQFauQFmAgErtwFmtwF6AgEpugFhugF8AgEovQFfvQFiAgEnvAFevAFpAgEmtgFctgFpAgEkswHMAbMB7AECASN/Q39SAgFpfER8UQIBZ4IBlQGCAcgBAgFkgwHBAYMB6wECAWKQAWCQAX4CAWCMAVuMAWsCAV6TAVqTAWgCAVyOAWSOAXgCAVqLAWSLAXgCAViPAV+PAXoCAVeSAV2SAWQCAVaRAVyRAWUCAVWKAVqKAWcCAVOIAc4BiAHuAQIBUssBRMsBUAIBTsgBRcgBVAIBTdMBRNMBUgIBStABRdABVgIBSQ==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0hDOlxVc2Vyc1xNYXRldXMgQ3J1elxEb2N1bWVudHNcR2l0SHViXFJlRnJhbWVXb3JrXFRlc3RzXFJ1bkFsbFRlc3RzLnhhbWxmAWEBcwECSAPmAQ4CAQFJBU0KAwGDAU4F5AEgAgECSRNJNgMBhAFLCUumAQMBhQFOoAFOswEDAYIBVAvhARYCAQNLOEs+AwGIAUuRAUujAQMBhgFZO1k+AgEHWjtaPgIBBls+W0UCAQVcO1w+AgEEXg1kIQIBfWUNZe0BAgF5Zg1mqAICAXVnDWfOAQIBcWgNaKkCAgFtaQ1prQICAWlqDdQBHQIBHNUBDdUBzAECARfWAQ3WAboBAgET1wEN1wGXAwIBD9gBDeABIgIBCF48XkUDAYABYRNhQgIBf16sAV6zAQIBfmWVAWXqAQIBfGVNZV8CAXpmnQFmpQICAXhmVWZnAgF2Z5gBZ8sBAgF0Z1BnYgIBcmiYAWigAQIBcGirAWi0AQIBbmmYAWmiAQIBbGmtAWm2AQIBamomai8CAWdwE9EBHgIBHdUBxQHVAckBAgEb1QE91QFGAgEZ1QGvAdUBtwECARjWAZUB1gG3AQIBFtYBTdYBXwIBFNcBkQHXAZQDAgES1wFJ1wFbAgEQ2AHmAtgBswMCAQ7YAb4D2AHEAwIBDdgBzgHYAdQBAgEM2AGrAdgBvQECAQrYAYcC2AGoAgIBCXIXjwEiAgFMvgEXzwEiAgFDlwEbpAEzAgEwrAEbuQEzAgEecxl6IgIBYnsZe8sBAgFffBmAATECAV2BARmOATECAU2/ARnGASICAUjHARnOASICAUSfAWKfAYABAgFCnAFdnAFtAgFAogFcogFqAgE+mQFmmQF6AgE8nQFanQFmAgE6mwFmmwF6AgE4ngFhngF8AgE3oQFfoQFkAgE2oAFeoAFpAgE0mgFcmgFpAgEylwHeAZcB/gECATG0AWK0AYABAgEvsQFdsQFtAgEttwFctwFqAgErrgFmrgF6AgEpsgFasgFmAgEnsAFmsAF6AgElswFhswF8AgEktgFftgFiAgEjtQFetQFpAgEirwFcrwFpAgEgrAHMAawB7AECAR94Q3hSAgFldUR1UQIBY3uVAXvIAQIBYHzBAXzrAQIBXokBYIkBfgIBXIUBW4UBawIBWowBWowBaAIBWIcBZIcBeAIBVoQBZIQBeAIBVIgBX4gBegIBU4sBXYsBZAIBUooBXIoBZQIBUYMBWoMBZwIBT4EBzgGBAe4BAgFOxAFExAFQAgFKwQFFwQFUAgFJzAFEzAFSAgFGyQFFyQFWAgFF</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -283,14 +276,14 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="418,560">
+      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="418,845">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEachRow_2" sap:VirtualizedContainerService.HintSize="448,707">
+      <sap2010:ViewStateData Id="ForEachRow_2" sap:VirtualizedContainerService.HintSize="448,992">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -310,15 +303,15 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_15" sap:VirtualizedContainerService.HintSize="470,2006">
+      <sap2010:ViewStateData Id="Sequence_15" sap:VirtualizedContainerService.HintSize="470,2291">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ExcelApplicationScope_2" sap:VirtualizedContainerService.HintSize="484,2115" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="506,2544">
+      <sap2010:ViewStateData Id="ExcelApplicationScope_2" sap:VirtualizedContainerService.HintSize="484,2400" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="506,2829">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -326,7 +319,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="RunAllTests_1" sap:VirtualizedContainerService.HintSize="546,2624" />
+      <sap2010:ViewStateData Id="RunAllTests_1" sap:VirtualizedContainerService.HintSize="546,2909" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
