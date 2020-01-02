@@ -3,6 +3,7 @@
     <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store credential data. It is recommanded to use this dictionary to retrieve credentials from the user or from orchestrator because it content is filled in the Init State and you dont need to invoke 'GetAppCredentials' manually.&#xA;" Name="in_Credentials" Type="InArgument(scg:Dictionary(x:String, sn:NetworkCredential))" />
+    <x:Property Name="in_ProcessReferences" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
