@@ -14,7 +14,6 @@
 * takes screenshots in case of application exceptions
 * provides extra utility workflows like sending a templated email
 * runs sample Notepad application with dummy Excel input data
-* 
 
 
 ### How It Works ###
