@@ -106,7 +106,7 @@
               </ui:ExcelReadRange.Range>
             </ui:ExcelReadRange>
             <ui:AppendLine DisplayName="Append line (Header top) " FileName="[in_TestLogFile]" sap2010:WorkflowViewState.IdRef="AppendLine_17" Text="[Environment.NewLine+&quot;=================================================&quot;]" />
-            <ui:AppendLine DisplayName="Append line  (Header intormation)" FileName="[in_TestLogFile]" sap2010:WorkflowViewState.IdRef="AppendLine_18" Text="[&quot;Starting new set of &quot;+Tests.Rows.Count.ToString+&quot; tests at &quot;+now.ToString(&quot;hh:mm:ss  tt, dd/MM/yyyy&quot;)]" />
+            <ui:AppendLine DisplayName="Append line  (Header information)" FileName="[in_TestLogFile]" sap2010:WorkflowViewState.IdRef="AppendLine_18" Text="[&quot;Starting new set of &quot;+Tests.Rows.Count.ToString+&quot; tests at &quot;+now.ToString(&quot;hh:mm:ss  tt, dd/MM/yyyy&quot;)]" />
             <ui:AppendLine DisplayName="Append line (Header bottom) " FileName="[in_TestLogFile]" sap2010:WorkflowViewState.IdRef="AppendLine_19" Text="=================================================" />
             <ui:AddDataColumn x:TypeArguments="x:String" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="Status" DataTable="[Tests]" DisplayName="Add Status column" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_4" MaxLength="-1" Unique="False" />
             <ui:AddDataColumn x:TypeArguments="x:String" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="Comments" DataTable="[Tests]" DisplayName="Add Comments column" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_5" MaxLength="-1" Unique="False" />
