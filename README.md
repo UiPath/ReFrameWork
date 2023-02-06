@@ -1,3 +1,7 @@
+# The maintained version of ReFramework can be found here: https://github.com/UiPath-Services/StudioTemplates/tree/develop/REFramework
+This one is deprecated.
+
+
 ### Documentation is included in the Documentation folder ###
 
 [ReFrameWork Documentation](https://github.com/UiPath/ReFrameWork/blob/master/Documentation/REFramework%20documentation.pdf)
