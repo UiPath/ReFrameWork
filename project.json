@@ -1,12 +1,63 @@
 {
-  "description": "UiPath REFramework Template",
-  "version": "2016.2.6274.33252",
+  "name": "ReFrameWork",
+  "projectId": "d9727b60-99ab-4c74-9fd2-d8248c808c7b",
+  "description": "UiPath Robotic Enterprise Framework",
   "main": "Main.xaml",
-  "id": "UiPath_REFrameWork",
-  "dependencies": {},
-  "configurationOptions": {},
-  "excludedData": [
-    "Private:*",
-    "*password*"
-  ]
+  "dependencies": {
+    "UiPath.Credentials.Activities": "2.1.0",
+    "UiPath.Excel.Activities": "2.24.4",
+    "UiPath.Mail.Activities": "2.0.11",
+    "UiPath.System.Activities": "25.2.3",
+    "UiPath.Testing.Activities": "24.10.4",
+    "UiPath.UIAutomation.Activities": "24.10.11"
+  },
+  "webServices": [],
+  "entitiesStores": [],
+  "schemaVersion": "4.0",
+  "studioVersion": "22.12.0.0",
+  "projectVersion": "1.0.0",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "netFrameworkLazyLoading": false,
+    "isPausable": true,
+    "isAttended": false,
+    "requiresUserInteraction": true,
+    "supportsPersistence": false,
+    "workflowSerialization": "DataContract",
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ],
+    "executionType": "Workflow",
+    "readyForPiP": false,
+    "startsInPiP": false,
+    "mustRestoreAllDependencies": true,
+    "pipType": "ChildSession"
+  },
+  "designOptions": {
+    "projectProfile": "Developement",
+    "outputType": "Process",
+    "libraryOptions": {
+      "includeOriginalXaml": false,
+      "privateWorkflows": []
+    },
+    "processOptions": {
+      "ignoredFiles": []
+    },
+    "fileInfoCollection": [],
+    "saveToCloud": false
+  },
+  "expressionLanguage": "VisualBasic",
+  "entryPoints": [
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "4f361825-eb58-4a0f-9f1d-5ea7eb341ca3",
+      "input": [],
+      "output": []
+    }
+  ],
+  "isTemplate": false,
+  "templateProjectData": {},
+  "publishData": {},
+  "targetFramework": "Windows"
 }
