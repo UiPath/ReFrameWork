@@ -1,1 +1,1 @@
-placeholder for github
+When a System Error is thrown in the process, a screenshot is taken and saved to Exception_Screenshots folder.
