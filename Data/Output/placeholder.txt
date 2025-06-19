@@ -1,1 +1,1 @@
-placeholder for github
+Output folder should be used to store the files resulted from the process, such as reports or status files.

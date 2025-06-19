@@ -1,0 +1,8 @@
+﻿{
+  "UiPath.Testing.Activities.Generic.KeepScreenshots": "False",
+  "UiPath.Testing.Activities.Generic.ScreenshotsPath": "",
+  "UiPath.Testing.Activities.VerifyActivitiesOutputFormat.VerifyExpressionOutputFormat": "",
+  "UiPath.Testing.Activities.VerifyActivitiesOutputFormat.VerifyExpressionWithOperatorOutputFormat": "",
+  "UiPath.Testing.Activities.VerifyActivitiesOutputFormat.VerifyControlAttributeOutputFormat": "",
+  "UiPath.Testing.Activities.VerifyActivitiesOutputFormat.VerifyRangeOutputFormat": ""
+}

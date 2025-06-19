@@ -1,1 +1,1 @@
-placeholder for github
+Temp folder should store the files while they are being processed. Once the processing part is done, the files should be removed from this folder.
